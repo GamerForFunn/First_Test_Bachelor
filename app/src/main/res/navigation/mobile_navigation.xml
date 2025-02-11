@@ -15,11 +15,36 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.testforbachelor.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_navigation_user_to_game2Fragment"
+            app:destination="@id/game2Fragment"
+            app:popUpTo="@id/navigation_dashboard"
+            app:popUpToInclusive="false"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/game2Fragment"
+        android:name="com.example.testforbachelor.ui.game_2.Game2Fragment"
+        android:label="Game2Fragment"
+        tools:layout="@layout/fragment_game2">
+        <action
+            android:id="@+id/action_game2Fragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:popUpTo="@id/game2Fragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_game2Fragment_to_navigation_dashboard2"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.testforbachelor.ui.notifications.NotificationsFragment"
         android:label="@string/title_user"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications"/>
+
+
+
 </navigation>

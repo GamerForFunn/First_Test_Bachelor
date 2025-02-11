@@ -21,4 +21,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.165" />
+
+    <!-- Temporary button to go to game 2 for testing -->
+    <Button
+        android:id="@+id/goToGame2Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Game 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_dashboard" />
 </androidx.constraintlayout.widget.ConstraintLayout>
