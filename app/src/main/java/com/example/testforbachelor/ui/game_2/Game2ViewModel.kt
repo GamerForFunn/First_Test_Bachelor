@@ -31,7 +31,8 @@ class Game2ViewModel : ViewModel() {
     fun getRandomImage(): Int { //Function to get a random image from the array
         //It makes no sense to me why the data is an int but apparently path ID's are ints
         val imageList = getImageList()
-        val random = (0..imageList.size).random()
+        val listLength = imageList.size - 1
+        val random = (0..listLength).random()
         return imageList[random].imageResId
     }
 }

@@ -1,12 +1,14 @@
 package com.example.testforbachelor.ui.game_2
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.testforbachelor.databinding.FragmentGame2Binding
@@ -18,8 +20,8 @@ class Game2Fragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-
+    private var isTimerRunning = false
+    private var elapsedTime = 0L
     private lateinit var timerTextView: TextView
     private var timer: CountUpTimer? = null
 
@@ -105,22 +107,42 @@ class Game2Fragment : Fragment() {
         _binding = null
     }
     private fun correctAnswer(){ //Does an action when the answer is correct
-
-
-    }
-    private fun wrongAnswer(){ //Does an action when the answer is wrong
+        stopTimer()
+        Toast.makeText(requireContext(), "Correct!", Toast.LENGTH_SHORT).show()
 
     }
-    private fun startTimer(){
+    private fun wrongAnswer(){
+        Toast.makeText(requireContext(), "Wrong!", Toast.LENGTH_SHORT).show()
+    }//Does an action when the answer is wrong
 
-    }
-    private fun stopTimer(){
+        private fun startTimer() {
+            if (!isTimerRunning) {
+                timer = CountUpTimer(Long.MAX_VALUE, 1000)
+                timer?.start()
+                isTimerRunning = true
+            }
+        }
 
-    }
+        private fun stopTimer() {
+            if (isTimerRunning) {
+                timer?.cancel()
+                isTimerRunning = false
+            }
+        }
 
-    inner class CountUpTimer(millisecond: Long, interval: Long) : CountDownTimer(millisecond, interval) {
+        inner class CountUpTimer(millisInFuture: Long, countDownInterval: Long) :
+            CountDownTimer(millisInFuture, countDownInterval) {
 
-    }
+            override fun onTick(millisUntilFinished: Long) {
+                elapsedTime += 1000
+                val seconds = elapsedTime / 1000
+                timerTextView.text = seconds.toString()
+            }
+
+            override fun onFinish() {
+                // This will never be called because we use Long.MAX_VALUE
+            }
+        }
 
 
 }
