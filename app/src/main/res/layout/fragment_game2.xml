@@ -66,6 +66,8 @@
         android:layout_height="56dp"
         android:layout_marginTop="36dp"
         android:text="TextView"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageViewCorrect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"

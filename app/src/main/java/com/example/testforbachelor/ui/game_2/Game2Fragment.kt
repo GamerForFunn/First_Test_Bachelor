@@ -50,6 +50,7 @@ class Game2Fragment : Fragment() {
     private lateinit var middleImageButton: ImageButton
     private lateinit var rightImageButton: ImageButton
     private lateinit var correctImageView: ImageView
+    private lateinit var game2Welcome: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +66,7 @@ class Game2Fragment : Fragment() {
         timerTextView = binding.timerTextView
         game2RootLayout = binding.game2RootLayout
         retryButton = binding.retryButton
+        game2Welcome = binding.game2Welcome
 
         val textView: TextView = binding.game2Welcome
         game2ViewModel.text.observe(viewLifecycleOwner) {
@@ -124,6 +126,7 @@ class Game2Fragment : Fragment() {
         retryButton.visibility = View.VISIBLE
         val seconds = elapsedTime / 1000
         Toast.makeText(requireContext(), "Correct! Time: $seconds seconds", Toast.LENGTH_SHORT).show()
+        game2Welcome.text = "Correct!"
     }
 
     private fun wrongAnswer() {
@@ -131,6 +134,7 @@ class Game2Fragment : Fragment() {
         retryButton.visibility = View.VISIBLE
         stopTimer()
         Toast.makeText(requireContext(), "Wrong!", Toast.LENGTH_SHORT).show()
+        game2Welcome.text = "Wrong!"
     }
 
     private fun startTimer() {
@@ -180,5 +184,6 @@ class Game2Fragment : Fragment() {
         timerTextView.text = "0"
         generateRandomImages(game2ViewModel)
         startTimer()
+        game2Welcome.text = "Please select the correct image!"
     }
 }
