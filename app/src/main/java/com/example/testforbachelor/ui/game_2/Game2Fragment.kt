@@ -161,7 +161,7 @@ class Game2Fragment : Fragment() {
         while (randomImage3 == randomImage1 || randomImage3 == randomImage2) {
             randomImage3 = game2ViewModel.getRandomImage()
         }
-        winnerImage = // This should never happen, but it's good to have a default
+        winnerImage =
             run {
                 val random = (1..3).random()
                 // This should never happen, but it's good to have a default
