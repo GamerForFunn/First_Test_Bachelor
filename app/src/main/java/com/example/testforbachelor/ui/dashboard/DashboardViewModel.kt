@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class DashboardViewModel : ViewModel() {
-    fun genNum(): Int{
+    private fun genNum(): Int{
         return (1..3).random()
     }
     private val _text = MutableLiveData<String>().apply {
