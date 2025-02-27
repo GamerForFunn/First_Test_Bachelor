@@ -1,47 +1,121 @@
-package com.example.main
+package com.example.baseapptest
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.main.ui.theme.MainTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.Image
+import coil.compose.rememberAsyncImagePainter
+import androidx.compose.ui.layout.ContentScale
+import android.widget.VideoView
+import android.net.Uri
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.foundation.layout.*
+import android.view.ViewGroup
 
+// This is the activity that starts when the app is started.
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            MainTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            //MainScreen for login
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                LoginScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
 }
-
+// Function for LoginScreen and state management for components
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun LoginScreen(modifier: Modifier = Modifier) {
+    // Without "mutableStateOf", the input text will not be remembered and displayed
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var isLoggedIn by remember { mutableStateOf(false) }
+
+
+// Adding animation background
+    /*var videoPlayed by remember { mutableStateOf(false) }
+    AndroidView(
+        factory = { context ->
+            VideoView(context).apply {
+                val uri = Uri.parse("android.resource://${context.packageName}/raw/background")
+                setVideoURI(uri)
+                setOnPreparedListener {
+                    it.isLooping = false
+                    start()
+                }
+                setOnCompletionListener {
+                    videoPlayed = true
+                }
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
     )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MainTheme {
-        Greeting("Android")
+    LaunchedEffect(Unit) {
+        videoPlayed = true
+    }*/
+
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        // Viser enten en velkomstmelding eller innlogget status
+        Text(
+            text = if (isLoggedIn) "Innlogging vellykket! Du kan nå starte å spille."
+            else "Velkommen!",
+            fontSize = 24.sp
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Check if the user is NOT logged in
+        if (!isLoggedIn) {
+            OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text("Brukernavn") },
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Passord") },
+                shape = RoundedCornerShape(12.dp),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            //Login Button
+            Button(
+                onClick = { isLoggedIn = true },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF843A83))
+            ) {
+                Text(text = "Logg inn", color = Color.White)
+            }
+        }
     }
 }
