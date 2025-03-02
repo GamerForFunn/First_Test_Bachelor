@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("io.coil-kt:coil-compose:2.0.0") /* This dependenci is here so we can use an mp4 file */
+    implementation("io.coil-kt:coil-compose:2.0.0") /* This dependency is here so we can use an mp4 file */
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

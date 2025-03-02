@@ -1,4 +1,4 @@
-package com.example.baseapptest
+package com.example.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -46,7 +46,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
 
 // Adding animation background
-    /*var videoPlayed by remember { mutableStateOf(false) }
+    var videoPlayed by remember { mutableStateOf(false) }
     AndroidView(
         factory = { context ->
             VideoView(context).apply {
@@ -68,7 +68,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
     LaunchedEffect(Unit) {
         videoPlayed = true
-    }*/
+    }
 
 
     Column(
