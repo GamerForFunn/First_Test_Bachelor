@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation("io.coil-kt:coil-compose:2.0.0") /* This dependency is here so we can use an mp4 file */
+    implementation(libs.androidx.runtime.livedata) /* Dependency for live data in WordPairingGame */
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7") /* ViewModel dependency */
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
