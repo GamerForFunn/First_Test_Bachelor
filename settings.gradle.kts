@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Main"
+rootProject.name = "Cognitive Exercises App"
 include(":app")
+ 

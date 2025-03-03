@@ -1,4 +1,4 @@
-package com.example.main.ui.theme
+package com.example.cognitiveexercisesapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
