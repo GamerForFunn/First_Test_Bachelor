@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.main.data.model.Difficulty
 import com.example.main.data.model.WordPairingGameState
 import com.example.main.data.model.WordPairingWordSet
+import com.example.main.data.repository.WordPairingRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,12 +23,18 @@ class WordPairingViewModel : ViewModel() {
     private val _gameState = MutableLiveData<WordPairingGameState>()
     val gameState: LiveData<WordPairingGameState> get() = _gameState
 
+    // Repository containing word sets
+    private val repository = WordPairingRepository()
+
+    // Set starting difficulty
+    private var currentDifficulty = Difficulty.EASY
+
     // Track selected words AND their indices
     private var selectedWords = mutableListOf<String>()
     private var selectedIndices = mutableListOf<Int>()
 
     //Timer
-    private var timerJob: Job? = null // Track the timer coroutine
+    private var timerJob: Job? = null
 
     // Initialize the game with the first level
     init {
@@ -39,9 +47,10 @@ class WordPairingViewModel : ViewModel() {
             currentLevel = 1,
             score = 0,
             timeSpent = 0,
-            currentWordSet = getRandomWordSet(),
+            currentWordSet = getRandomWordSet(1),
             selectedIndices = emptyList(),
             isCorrectPair = null,
+            difficulty = currentDifficulty,
             timeLeft = 30 // Reset timer
         )
         startTimer() // Start the countdown
@@ -68,12 +77,12 @@ class WordPairingViewModel : ViewModel() {
     // Handle timeout (+ automatically set answer to wrong)
     private fun handleTimeout() {
         _gameState.value = _gameState.value?.copy(
-            statusMessage = "Oops! You ran out of time ⌛️", // Set timeout message
+            statusMessage = "Oops! You ran out of time ⌛️",
             selectedIndices = listOf(0, 1, 2),
             isCorrectPair = false // Force incorrect state
         )
         viewModelScope.launch {
-            delay(2000) // Show red color for 1 second
+            delay(2000) // Show red color for 2 seconds
             resetSelection()
             startTimer() // Restart timer for next attempt
         }
@@ -104,7 +113,7 @@ class WordPairingViewModel : ViewModel() {
                 false
             }
 
-            // Update game state with correctness AND indices (NEW)
+            // Update game state with correctness AND indices
             _gameState.value = _gameState.value?.copy(
                 selectedIndices = selectedIndices.toList(), // Expose indices
                 isCorrectPair = isCorrect // Track correctness
@@ -136,12 +145,14 @@ class WordPairingViewModel : ViewModel() {
         val newLevel = currentState.currentLevel + 1
         if (newLevel > MAX_LEVEL) {
             startNewGame() // Reset to level 1
+            // Here we should calculate the total score and redirect to game summary screen instead
         } else {
             // Proceed to next level
             _gameState.value = currentState.copy(
                 score = currentState.score + 1,
                 currentLevel = newLevel,
-                currentWordSet = getRandomWordSet(),
+                currentWordSet = getRandomWordSet(newLevel),
+                difficulty = currentDifficulty,
                 timeLeft = 30 // Reset timer for the new level
             )
             startTimer() // Restart timer
@@ -162,14 +173,18 @@ class WordPairingViewModel : ViewModel() {
     }
 
     // Function to get a random WordSet (for now, return a hardcoded set)
-    private fun getRandomWordSet(): WordPairingWordSet {
-        // Replace this with logic to fetch or generate random word sets
-        return WordPairingWordSet(
-            word1 = "Pretty",
-            word2 = "Beautiful",
-            word3 = "Ugly",
-            correctPair = Pair("Pretty", "Beautiful")
-        )
+    private fun getRandomWordSet(level: Int): WordPairingWordSet {
+        // For level 1-2: EASY, level 3-4: MEDIUM, level 5: HARD
+        val difficulty = when (level) {
+            1, 2 -> Difficulty.EASY
+            3, 4 -> Difficulty.MEDIUM
+            else -> Difficulty.HARD
+        }
+
+        // Update the difficulty
+        currentDifficulty = difficulty
+
+        return repository.getRandomWordSet(difficulty)
     }
 
     // Cleanup
