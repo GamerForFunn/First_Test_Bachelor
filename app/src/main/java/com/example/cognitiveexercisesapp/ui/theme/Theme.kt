@@ -10,6 +10,10 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -32,6 +36,13 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+object AppTheme {
+    val screenPadding = Modifier.padding(top = 240.dp)
+    val h1 = 50.sp
+    val h2 = 28.sp
+    val buttonTextSize = 40.sp
+}
 
 @Composable
 fun CognitiveExercisesAppTheme(
