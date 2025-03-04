@@ -71,5 +71,10 @@ fun HomeScreen(navController: NavController) {
         ) {
             Text(text = "wrong answer test")
         }
+        Button(
+            onClick = { navController.navigate(Routes.exerciseFinished) }
+        ) {
+            Text(text = "exercise finished test")
+        }
     }
 }

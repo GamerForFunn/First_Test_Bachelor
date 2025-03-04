@@ -3,6 +3,22 @@ package com.example.cognitiveexercisesapp.ui.data
 object GameInstructions {
     var currentLanguage = "EN" // Default language
 
+    fun getWronAnswerGame1(): String {
+        return if (currentLanguage == "NO") {
+            "Oops!\nDu vlakte feil nummer."
+        } else {
+            "Oops!\nYou selected a wrong number"
+        }
+    }
+
+    fun getExerciseFinished(): String {
+        return if (currentLanguage == "NO") {
+            "Øvelse ferdig!"
+        } else {
+            "Exercise Finished!"
+        }
+    }
+
     fun getGame1Instructions(): String {
         return if (currentLanguage == "NO") {
             "Trykk på flisene i rekkefølge fra laveste til høyeste"
@@ -26,13 +42,7 @@ object GameInstructions {
             "Associate the item with the correct image"
         }
     }
-    fun getWronAnswerGame1(): String {
-        return if (currentLanguage == "NO") {
-            "Oops!\nDu vlakte feil nummer."
-        } else {
-            "Oops!\nYou selected a wrong number"
-        }
-    }
+
 
     fun toggleLanguage() {
         currentLanguage = if (currentLanguage == "EN") "NO" else "EN"

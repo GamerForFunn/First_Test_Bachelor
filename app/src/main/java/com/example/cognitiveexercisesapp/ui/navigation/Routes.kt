@@ -3,6 +3,7 @@ package com.example.cognitiveexercisesapp.ui.navigation
 object Routes {
     var homeScreen = "home_screen"
     var wrongAnswer = "wrong_answer"
+    val exerciseFinished = "exercise_finished"
     var game1ScreenInstructions = "game1_screen_instructions"
     var game1Screen = "game1_screen"
     var game2ScreenInstructions = "game2_screen_Instructions"
