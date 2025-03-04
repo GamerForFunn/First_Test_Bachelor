@@ -39,7 +39,7 @@ private val LightColorScheme = lightColorScheme(
 
 object AppTheme {
     val screenPadding = Modifier.padding(top = 240.dp)
-    val h1 = 50.sp
+    val h1 = 40.sp
     val h2 = 28.sp
     val buttonTextSize = 40.sp
 }

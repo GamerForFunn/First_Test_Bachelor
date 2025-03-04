@@ -1,13 +1,24 @@
 package com.example.cognitiveexercisesapp.ui.data
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
+
 object GameInstructions {
+
+
+    var difficulty by mutableStateOf(1f) // Default value
+
+
     var currentLanguage = "EN" // Default language
 
+/* TODO im using the \n tag becaus its the only way i could figur out how to verticly center text :( */
     fun getWronAnswerGame1(): String {
         return if (currentLanguage == "NO") {
-            "Oops!\nDu vlakte feil nummer."
+            "Oops!\nDu vlakte feil\nnummer."
         } else {
-            "Oops!\nYou selected a wrong number"
+            "Oops!\nYou selected a\nwrong\nnumber"
         }
     }
 

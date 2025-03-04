@@ -17,43 +17,45 @@ import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
-
+import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = Routes.homeScreen, builder = {
-                composable(Routes.homeScreen){
-                    HomeScreen(navController)
+            CognitiveExercisesAppTheme {
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Routes.homeScreen) {
+                    composable(Routes.homeScreen) {
+                        HomeScreen(navController)
+                    }
+                    composable(Routes.wrongAnswer) {
+                        WrongAnswerGame1(navController)
+                    }
+                    composable(Routes.exerciseFinished) {
+                        ExerciseFinished(navController)
+                    }
+                    composable(Routes.game1ScreenInstructions) {
+                        Game1ScreenInstructions(navController)
+                    }
+                    composable(Routes.game1Screen) {
+                        Game1Screen(navController)
+                    }
+                    composable(Routes.game2ScreenInstructions) {
+                        Game2ScreenInstructions(navController)
+                    }
+                    composable(Routes.game2Screen) {
+                        Game2Screen(navController)
+                    }
+                    composable(Routes.game3ScreenInstructions) {
+                        Game3ScreenInstructions(navController)
+                    }
+                    composable(Routes.game3Screen) {
+                        Game3Screen(navController)
+                    }
                 }
-                composable(Routes.wrongAnswer){
-                    WrongAnswerGame1(navController)
-                }
-                composable(Routes.exerciseFinished){
-                    ExerciseFinished(navController)
-                }
-                composable(Routes.game1ScreenInstructions){
-                    Game1ScreenInstructions(navController)
-                }
-                composable(Routes.game1Screen){
-                    Game1Screen(navController)
-                }
-                composable(Routes.game2ScreenInstructions){
-                    Game2ScreenInstructions(navController)
-                }
-                composable(Routes.game2Screen){
-                    Game2Screen(navController)
-                }
-                composable(Routes.game3ScreenInstructions){
-                    Game3ScreenInstructions(navController)
-                }
-                composable(Routes.game3Screen){
-                    Game3Screen(navController)
-                }
-            })
+            }
         }
     }
 }
