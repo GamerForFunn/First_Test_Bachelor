@@ -12,8 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cognitiveexercisesapp.R
+
+val poppinsFamily = FontFamily(
+    Font(R.font.poppins_black, FontWeight.Normal)
+)
+val whiteTextStyle = TextStyle(
+    fontFamily = poppinsFamily,
+    fontSize = 16.sp, // Default font size, you can adjust as needed
+    fontWeight = FontWeight.Normal,
+    color = Color.White
+)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

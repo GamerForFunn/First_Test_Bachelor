@@ -6,7 +6,7 @@ import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 object Game1Config {
     val difficulty: Int
         get() = GameInstructions.difficulty.toInt()
-    val rounds = 3
+    val rounds = 1
     val showNextClick = false
 
     val columns = 4

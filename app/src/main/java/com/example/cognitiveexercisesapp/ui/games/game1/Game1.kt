@@ -103,19 +103,19 @@ fun Game1Screen(navController: NavController) {
                                 Button(
                                     onClick = {
                                         if (number != nextNumberToClick) {
-                                            navController.navigate(Routes.wrongAnswer)
+                                            navController.navigate(Routes.wrongAnswer+"/Game1")
                                         } else {
                                             gridList = gridList.toMutableList().also { it[index] = null }
                                             nextNumberToClick = gridList.filterNotNull().minOrNull() ?: -1
                                         }
                                     },
-                                    shape = androidx.compose.foundation.shape.CircleShape,  // ✅ Keeps button round
+                                    shape = androidx.compose.foundation.shape.CircleShape,
                                     modifier = Modifier
                                         .padding(8.dp)
                                         .size(70.dp)
                                 ) {
                                     Box(
-                                        modifier = Modifier.fillMaxSize(),  // ✅ Ensures text can expand
+                                        modifier = Modifier.fillMaxSize(),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -125,8 +125,8 @@ fun Game1Screen(navController: NavController) {
                                             maxLines = 1,
                                             softWrap = false,
                                             overflow = androidx.compose.ui.text.style.TextOverflow.Visible,
-                                            modifier = Modifier.width(IntrinsicSize.Min), // ✅ Keeps text width consistent
-                                            letterSpacing = (-1.sp) // ✅ Centers double digits better
+                                            modifier = Modifier.width(IntrinsicSize.Min),
+                                            letterSpacing = (-1.sp)
                                         )
 
                                     }

@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
-import com.example.cognitiveexercisesapp.ui.components.WrongAnswerGame1
+import com.example.cognitiveexercisesapp.ui.components.WrongAnswerScreen
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Screen
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Screen
 import com.example.cognitiveexercisesapp.ui.games.game3.Game3Screen
@@ -30,8 +30,9 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.homeScreen) {
                         HomeScreen(navController)
                     }
-                    composable(Routes.wrongAnswer) {
-                        WrongAnswerGame1(navController)
+                    composable(Routes.wrongAnswer+"/{currentGame}") {
+                        val currentGame = it.arguments?.getString("currentGame")
+                        WrongAnswerScreen(navController,currentGame?:"No Game")
                     }
                     composable(Routes.exerciseFinished) {
                         ExerciseFinished(navController)
