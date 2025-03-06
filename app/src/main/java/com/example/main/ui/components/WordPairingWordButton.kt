@@ -1,14 +1,24 @@
 package com.example.main.ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.main.R
 
 @Composable
 fun WordPairingWordButton(
@@ -16,25 +26,56 @@ fun WordPairingWordButton(
     index: Int,
     isSelected: Boolean,
     isCorrectPair: Boolean?,
-    onWordSelected: (String, Int) -> Unit
+    onWordSelected: (String, Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
+    // Determine button color based on selection state
     val backgroundColor = when {
-        // Check if the button is selected FIRST
-        isSelected && isCorrectPair == true -> Color.Green
-        isSelected && isCorrectPair == false -> Color.Red
-        isSelected -> Color.Gray // Single selected button
-        else -> Color.White // Default
+        isSelected && isCorrectPair == true -> Color.Green.copy(alpha = 0.3f)
+        isSelected && isCorrectPair == false -> Color.Red.copy(alpha = 0.3f)
+        isSelected -> Color.Gray.copy(alpha = 0.3f)
+        else -> Color.Transparent
     }
 
-    Button(
-        onClick = { onWordSelected(word, index) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor
-        )
+    // Calculate rotation of sock image and mirror it based on index
+    val (rotation, shouldMirror) = when (index) {
+        0 -> Pair(35f, true)  // Top sock
+        1 -> Pair(-35f, false)    // Middle sock
+        else -> Pair(35f, true) // Bottom sock
+    }
+
+    Box(
+        modifier = modifier
+            .width(140.dp)
+            .clickable { onWordSelected(word, index) },
+        contentAlignment = Alignment.Center
     ) {
-        Text(text = word, color = Color.Black)
+        // Sock image as background
+        Image(
+            painter = painterResource(id = R.drawable.sock),
+            contentDescription = "Word sock for $word",
+            modifier = Modifier
+                .width(140.dp)
+                .height(180.dp)
+                .graphicsLayer {
+                    rotationZ = rotation
+                    scaleX = if (shouldMirror) -1f else 1f
+                },
+            contentScale = ContentScale.Fit,
+            colorFilter = ColorFilter.tint(
+                color = backgroundColor,
+                blendMode = BlendMode.SrcAtop
+            )
+        )
+
+        // Word centered in the sock
+        Text(
+            text = word,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 40.dp),
+            style = MaterialTheme.typography.headlineSmall,
+            color = Color.Black
+        )
     }
 }

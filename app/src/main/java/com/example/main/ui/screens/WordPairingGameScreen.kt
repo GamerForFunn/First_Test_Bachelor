@@ -32,55 +32,79 @@ fun WordPairingGameScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(32.dp),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "⏰ ${gameState!!.timeLeft}s",
                 style = MaterialTheme.typography.headlineSmall
             )
-            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Level: ${gameState!!.currentLevel}",
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Score: ${gameState!!.score}",
-                style = MaterialTheme.typography.headlineSmall
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Create a list of words with their indices
-            val words = listOf(
-                gameState!!.currentWordSet.word1,
-                gameState!!.currentWordSet.word2,
-                gameState!!.currentWordSet.word3
+                text = "Lignende betydning",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(top = 16.dp)
             )
 
-            // Render buttons with indices
-            words.forEachIndexed { index, word ->
+            // Scattered sock layout
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                val words = listOf(
+                    gameState!!.currentWordSet.word1,
+                    gameState!!.currentWordSet.word2,
+                    gameState!!.currentWordSet.word3
+                )
+
+                // Position each sock
                 WordPairingWordButton(
-                    word = word,
-                    index = index,
-                    isSelected = gameState!!.selectedIndices.contains(index),
+                    word = words[0],
+                    index = 0,
+                    isSelected = gameState!!.selectedIndices.contains(0),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = { selectedWord, selectedIndex ->
-                        viewModel.onWordSelected(selectedWord, selectedIndex)
-                    }
+                    onWordSelected = viewModel::onWordSelected,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .offset(x = 20.dp, y = 40.dp)
+                )
+
+                WordPairingWordButton(
+                    word = words[1],
+                    index = 1,
+                    isSelected = gameState!!.selectedIndices.contains(1),
+                    isCorrectPair = gameState!!.isCorrectPair,
+                    onWordSelected = viewModel::onWordSelected,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .offset(x = (-20).dp)
+                )
+
+                WordPairingWordButton(
+                    word = words[2],
+                    index = 2,
+                    isSelected = gameState!!.selectedIndices.contains(2),
+                    isCorrectPair = gameState!!.isCorrectPair,
+                    onWordSelected = viewModel::onWordSelected,
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .offset(x = 20.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Display status message (if any)
-            gameState!!.statusMessage?.let { message ->
-                Text(
-                    text = message,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.hsl(250f, 0.33f, 0.32f),
-                    modifier = Modifier.padding(16.dp)
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp), // Fixed height for message area
+                contentAlignment = Alignment.Center
+            ) {
+                // Display status message (if any)
+                gameState!!.statusMessage?.let { message ->
+                    Text(
+                        text = message,
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.hsl(250f, 0.33f, 0.32f)
+                    )
+                }
             }
         }
     }
