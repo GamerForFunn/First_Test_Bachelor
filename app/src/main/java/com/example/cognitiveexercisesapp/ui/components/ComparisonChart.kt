@@ -27,15 +27,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 
 
 // Function that shows the screen.
 @Composable
-fun ComparisonChartScreen() {
+fun ComparisonChartScreen(navController: NavController) {
     var showContent by remember { mutableStateOf(true) }
-    var doctorsCommentObj = DoctorsCommentScreen()
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         if (showContent) {
             BackgroundThemeComparisonChart(
@@ -49,12 +50,10 @@ fun ComparisonChartScreen() {
             )
             ContinueButton(
                 onClick = {
-                    showContent = false
+                    navController.navigate(Routes.doctorsComment)
                           },
                 modifier = Modifier.padding(innerPadding)
             )
-        } else {
-            doctorsCommentObj.DoctorsCommentShowScreen()
         }
     }
 }
@@ -175,7 +174,6 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
                     )
                 }
             }
-
     }
 }
 

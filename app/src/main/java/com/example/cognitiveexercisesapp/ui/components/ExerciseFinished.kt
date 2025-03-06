@@ -38,7 +38,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun ExerciseFinished(navController: NavController) {
 
-    var showExerciseFinishedScreen by remember { mutableStateOf(true) }
+
 
     // Vars for showing the different parts of the screen after a given delay.
     // All of these are supposed to be false EXCEPT for showContent.
@@ -70,7 +70,7 @@ fun ExerciseFinished(navController: NavController) {
     }
     // The different parts of the screen are displayed after a delay.
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        if (showContent) {
+        if (true) {
             BackgroundThemeExerciseFinished(
                 modifier = Modifier.padding(innerPadding)
             )
@@ -113,15 +113,12 @@ fun ExerciseFinished(navController: NavController) {
             if (showButton) {
                 ContinueButton(
                     onClick = {
-                        showContent = false
-                        showExerciseFinishedScreen = false
+                        navController.navigate(Routes.comparisonChart)
                     },
                     true,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
-        } else {
-            navController.navigate(Routes.comparisonChart)
         }
     }
 }
