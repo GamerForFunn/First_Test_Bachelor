@@ -23,19 +23,17 @@ import android.net.Uri
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.foundation.layout.*
 import android.view.ViewGroup
+import com.example.main.ui.screens.WordPairingGameScreen
 
 // This is the activity that starts when the app is started.
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MainScreen for login
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                LoginScreen(modifier = Modifier.padding(innerPadding))
+            WordPairingGameScreen()
             }
         }
     }
-}
 // Function for LoginScreen and state management for components
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier) {
