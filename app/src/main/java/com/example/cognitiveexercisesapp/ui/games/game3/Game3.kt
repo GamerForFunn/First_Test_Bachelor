@@ -9,8 +9,7 @@ import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 
 @Composable
 fun Game3Screen (navController: NavController) {
-    Column(modifier = Modifier.then(AppTheme.screenPadding)) {
-        Text(text = "Game 3", fontSize = AppTheme.h1)
-    }
+    val viewModel: WordPairingViewModel = viewModel()
+    val gameState by viewModel.gameState.observeAsState()
 
 }
