@@ -17,8 +17,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.games.game1.Game1Config
+import com.example.cognitiveexercisesapp.ui.games.game1.getAmountAndRangeBasedOnDifficulty
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.testforbachelor.ui.game_2.Game2ViewModel
 
@@ -45,6 +51,31 @@ fun Game2Screen(navController: NavController) {
     val timerText by viewModel.timerText.collectAsState()
     val isRetryVisible by viewModel.isRetryVisible.collectAsState()
     val backgroundColor by viewModel.backgroundColor.collectAsState()
+
+    // Track the current round
+    var currentRound by remember { mutableStateOf(1) }
+
+    // Store the grid list in state so it resets each round
+    var gridList by remember { mutableStateOf(getAmountAndRangeBasedOnDifficulty()) }
+
+
+    // Check if all numbers are null (round finished)
+    val isRoundFinished = gridList.all { it == null }
+
+    // Handle round progression
+    fun roundChecker() {
+
+            if (currentRound < Game2Config.rounds) {
+                // Move to the next round and reset the grid
+                currentRound++
+                viewModel.resetGame()
+
+            } else {
+                // Navigate to exerciseFinished after all rounds
+                navController.navigate(Routes.exerciseFinished)
+            }
+
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()

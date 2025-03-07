@@ -37,6 +37,8 @@ class Game2ViewModel : ViewModel() {
 
     private var elapsedTime = 0L
 
+
+
     init {
         generateRandomImages()
     }
@@ -81,36 +83,9 @@ class Game2ViewModel : ViewModel() {
         )
         return images.random()
     }
-    fun onLeftImageClick(){
-        if(_randomImage1 == _winnerImage){ correctAnswer()}
-        else{wrongAnswer() }
-    }
-    fun onMiddleImageClick(){
-        if(_randomImage2 == _winnerImage){correctAnswer()}
-        else{wrongAnswer()}
-    }
-    fun onRightImageClick(){
-        if(_randomImage3 == _winnerImage){correctAnswer()}
-        else{wrongAnswer()}
-    }
     fun onRetryClick(){resetGame()}
-    fun correctAnswer() {
-        stopTimer()
-        
-        /*_backgroundColor.update { ComposeColor.Green }
-        _isRetryVisible.update { true }
-        val minutes = (elapsedTime / 1000) / 60
-        val seconds = (elapsedTime / 1000) % 60
-        val formattedTime = String.format("%02d:%02d", minutes, seconds)
-        _game2WelcomeText.update { "Correct! Time: $formattedTime" }*/
-    }
 
-    fun wrongAnswer() {
-        _backgroundColor.update { ComposeColor.Red }
-        _isRetryVisible.update { true }
-        stopTimer()
-        _game2WelcomeText.update { "Wrong!" }
-    }
+
     fun startTimer() {
         //TODO
     }
@@ -119,8 +94,6 @@ class Game2ViewModel : ViewModel() {
         //TODO
     }
     fun resetGame() {
-        _backgroundColor.update { ComposeColor.White }
-        _isRetryVisible.update { false }
         elapsedTime = 0
         _timerText.update { "00:00" }
         generateRandomImages()
