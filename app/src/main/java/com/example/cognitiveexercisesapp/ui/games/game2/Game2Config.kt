@@ -3,14 +3,13 @@ package com.example.cognitiveexercisesapp.ui.games.game2
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.games.game1.calculateAmountAndRange
 
-class Game2Config {
+object Game2Config {
     val difficulty: Int
         get() = GameInstructions.difficulty.toInt()
-    val rounds = 1
+    val rounds = 3
     val showNextClick = false
 
-    val colums = 4 //Don't know why this is necessary
-    val row = 7 //Not this either
+
 
     val amount: Int
         get() = calculateAmountAndRange(difficulty).first

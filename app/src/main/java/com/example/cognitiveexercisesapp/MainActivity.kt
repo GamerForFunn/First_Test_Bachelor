@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cognitiveexercisesapp.ui.components.ComparisonChartScreen
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
 import com.example.cognitiveexercisesapp.ui.components.WrongAnswerScreen
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Screen
@@ -33,6 +34,9 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.wrongAnswer+"/{currentGame}") {
                         val currentGame = it.arguments?.getString("currentGame")
                         WrongAnswerScreen(navController,currentGame?:"No Game")
+                    }
+                    composable(Routes.comparisonChart){
+                        ComparisonChartScreen(navController)
                     }
                     composable(Routes.exerciseFinished) {
                         ExerciseFinished(navController)
