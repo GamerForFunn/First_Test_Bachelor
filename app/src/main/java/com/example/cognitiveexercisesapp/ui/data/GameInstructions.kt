@@ -40,9 +40,9 @@ object GameInstructions {
 
     fun getGame2Instructions(): String {
         return if (currentLanguage == "NO") {
-            "Par ord i henhold til regelen ovenfor"
+            "Trykk på det samme bilde som er på toppen av skjermen"
         } else {
-            "Pair words according to the rule stated above"
+            "Press the same image as the one above"
         }
     }
 
