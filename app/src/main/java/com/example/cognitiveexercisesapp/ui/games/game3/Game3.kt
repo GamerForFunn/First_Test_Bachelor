@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.components.WordPairingWordButton
+import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import kotlinx.coroutines.delay
 
 @Composable
@@ -70,7 +71,7 @@ fun Game3Screen (navController: NavController) {
                     index = 0,
                     isSelected = gameState!!.selectedIndices.contains(0),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = viewModel::onWordSelected,
+                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .offset(x = 20.dp, y = 40.dp)
@@ -81,7 +82,7 @@ fun Game3Screen (navController: NavController) {
                     index = 1,
                     isSelected = gameState!!.selectedIndices.contains(1),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = viewModel::onWordSelected,
+                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .offset(x = (-20).dp)
@@ -92,7 +93,7 @@ fun Game3Screen (navController: NavController) {
                     index = 2,
                     isSelected = gameState!!.selectedIndices.contains(2),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = viewModel::onWordSelected,
+                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .offset(x = 20.dp)
@@ -116,4 +117,6 @@ fun Game3Screen (navController: NavController) {
             }
         }
     }
+
+
 }

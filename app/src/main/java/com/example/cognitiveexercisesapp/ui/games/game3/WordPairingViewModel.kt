@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.data.game3model.Game3Difficulty
 import com.example.cognitiveexercisesapp.ui.data.game3model.WordPairingGameState
 import com.example.cognitiveexercisesapp.ui.data.game3model.WordPairingWordSet
 import com.example.cognitiveexercisesapp.ui.data.WordPairingRepository
+import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +18,7 @@ class WordPairingViewModel : ViewModel() {
 
     // Set a maximum amount of levels to 5
     private companion object {
-        const val MAX_LEVEL = 1
+        const val MAX_LEVEL = 3
     }
 
     // LiveData to hold the game state
@@ -89,7 +91,7 @@ class WordPairingViewModel : ViewModel() {
     }
 
     // Function to handle word selection
-    fun onWordSelected(word: String, index: Int) { // Add index parameter
+    fun onWordSelected(word: String, index: Int,navController: NavController) { // Add index parameter
         if (selectedWords.size < 2) {
             selectedWords.add(word)
             selectedIndices.add(index) // Track the index
@@ -121,7 +123,7 @@ class WordPairingViewModel : ViewModel() {
 
             if (isCorrect) {
                 showSuccess()
-                updateScoreAndLevel()
+                updateScoreAndLevel(navController)
             } else {
                 showError()
             }
@@ -140,12 +142,16 @@ class WordPairingViewModel : ViewModel() {
     }
 
     // Function to update score and level
-    private fun updateScoreAndLevel() {
+    private fun updateScoreAndLevel(navController: NavController) {
         val currentState = _gameState.value ?: return
         val newLevel = currentState.currentLevel + 1
         if (newLevel > MAX_LEVEL) {
-            startNewGame() // Reset to level 1
-            // Here we should calculate the total score and redirect to game summary screen instead
+            //startNewGame()  Reset to level 1
+            // TODO Here we should calculate the total score and redirect to game summary screen instead
+
+            navController.navigate(Routes.exerciseFinished)
+
+
         } else {
             // Proceed to next level
             _gameState.value = currentState.copy(
