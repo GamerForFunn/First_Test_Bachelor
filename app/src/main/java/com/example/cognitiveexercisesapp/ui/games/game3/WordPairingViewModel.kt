@@ -16,7 +16,7 @@ class WordPairingViewModel : ViewModel() {
 
     // Set a maximum amount of levels to 5
     private companion object {
-        const val MAX_LEVEL = 5
+        const val MAX_LEVEL = 1
     }
 
     // LiveData to hold the game state

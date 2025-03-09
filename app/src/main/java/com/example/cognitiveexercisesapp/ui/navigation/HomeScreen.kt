@@ -15,7 +15,6 @@ import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 fun HomeScreen(navController: NavController) {
     var currentLanguage by remember { mutableStateOf(GameInstructions.currentLanguage) }
 
-    // ✅ Directly reference GameInstructions.difficulty so changes persist globally
     var difficulty by remember { mutableStateOf(GameInstructions.difficulty) }
 
     Column(
