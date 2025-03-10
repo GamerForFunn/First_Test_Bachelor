@@ -3,7 +3,6 @@ package com.example.cognitiveexercisesapp.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,7 +31,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
-import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 import kotlinx.coroutines.delay
@@ -43,14 +41,12 @@ fun ExerciseFinished(navController: NavController) {
 
     // Vars for showing the different parts of the screen after a given delay.
     // All of these are supposed to be false EXCEPT for showContent.
-    var showTimeCounter by remember { mutableStateOf(true) }
-    var showWrongAnswers by remember { mutableStateOf(true) }
-    var showLevelDifficulty by remember { mutableStateOf(true) }
-    var showTotalScore by remember { mutableStateOf(true) }
-    var showUserScore by remember { mutableStateOf(true) }
-    var showButton by remember { mutableStateOf(true) }
-    // showContent is currently not in use in this version.
-    // Var showContent by remember { mutableStateOf(true) }
+    var showTimeCounter by remember { mutableStateOf(false) }
+    var showWrongAnswers by remember { mutableStateOf(false) }
+    var showLevelDifficulty by remember { mutableStateOf(false) }
+    var showTotalScore by remember { mutableStateOf(false) }
+    var showUserScore by remember { mutableStateOf(false) }
+    var showButton by remember { mutableStateOf(false) }
 
     // Supposed to count the number of confetti images that are displayed. When all are shown,
     // it will hide them again and show the sparkling images instead.
@@ -150,21 +146,6 @@ fun BackgroundThemeExerciseFinished(modifier: Modifier = Modifier) {
                 )
             )
     )
-}
-
-
-/* This is the start screen when you first open the app. This is just a placeholder for when it
-* gets added to the other mini games. */
-@Composable
-fun StartScreen(onStartClicked: () -> Unit, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(onClick = onStartClicked) {
-            Text("Start Exercise")
-        }
-    }
 }
 
 // This displays the exercise finished text.

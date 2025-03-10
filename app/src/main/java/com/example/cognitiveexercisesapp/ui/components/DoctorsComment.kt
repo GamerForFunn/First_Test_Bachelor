@@ -91,7 +91,7 @@ fun ScreenTitleDoctorsComment() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 50.dp)
-            .height(117.dp)
+            .height(140.dp)
             .shadow(1.dp)
     ) {
         Text(
@@ -99,8 +99,8 @@ fun ScreenTitleDoctorsComment() {
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 28.sp),
             modifier = Modifier
-                .padding(top = 45.dp)
-                .width(390.dp)
+                .padding(top = 75.dp)
+                .width(380.dp)
         )
 
     }
