@@ -124,7 +124,7 @@ fun ScoreDisplayDoctorsComment(userScore: Int, modifier: Modifier = Modifier) {
                 .padding(bottom = 380.dp)
         ) {
             Text(
-                text = "Your score",
+                text = "Din score",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -172,7 +172,7 @@ fun ContinueButtonDoctorsComment(onClick: () -> Unit, modifier: Modifier = Modif
                 .height(50.dp)
         ) {
             Text(
-                "Continue",
+                "Fortsett",
                 fontSize = 24.sp,
                 modifier = Modifier
             )

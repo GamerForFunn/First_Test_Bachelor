@@ -66,7 +66,7 @@ fun Game2Screen(navController: NavController) {
     fun roundChecker() {
 
             if (currentRound < Game2Config.rounds) {
-                // Move to the next round and reset the grid
+                // Move to the next round
                 currentRound++
                 viewModel.resetGame()
 
@@ -158,5 +158,3 @@ fun Game2Screen(navController: NavController) {
         }
     }
 }
-
-

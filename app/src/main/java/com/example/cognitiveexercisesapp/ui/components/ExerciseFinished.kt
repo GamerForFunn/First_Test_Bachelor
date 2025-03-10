@@ -150,7 +150,7 @@ fun StartScreen(onStartClicked: () -> Unit, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Button(onClick = onStartClicked) {
-            Text("Start Exercise")
+            Text("Start oppgave")
         }
     }
 }
@@ -163,7 +163,7 @@ fun FinishedExercise(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = "Exercise finished",
+            text = "Oppgave fullført",
             textAlign = TextAlign.Center,
             fontSize = 30.sp,
             modifier = Modifier

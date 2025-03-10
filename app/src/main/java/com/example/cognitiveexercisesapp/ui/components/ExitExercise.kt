@@ -88,7 +88,7 @@ class ExitExerciseScreen {
                     .height(50.dp)
             ) {
                 Text(
-                    "Yes",
+                    "Ja",
                     fontSize = 30.sp,
                     color = Color(0xFF007AFF),
                     modifier = Modifier
@@ -114,7 +114,7 @@ class ExitExerciseScreen {
                     .height(50.dp)
             ) {
                 Text(
-                    "No",
+                    "Nei",
                     fontSize = 30.sp,
                     modifier = Modifier
                 )
@@ -132,7 +132,7 @@ class ExitExerciseScreen {
             contentAlignment = Alignment.BottomCenter
         ) {
             Text(
-                text = "Note: If you quit the game before completing it, you will not receive any rewards.",
+                text = "Advarsel: Hvis du går ut av spillet uten å fullføre vil du ikke mota noen belønninger.",
                 fontSize = 20.sp,
                 color = Color(0xFF6B6B6B),
                 modifier = Modifier
@@ -152,7 +152,7 @@ class ExitExerciseScreen {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Do you really want to exit the exercise? ",
+                text = "Vil du virkelig forlate spillet? ",
                 fontSize = 25.sp,
                 color = Color(0xFF6B6B6B),
                 modifier = Modifier.padding(16.dp)

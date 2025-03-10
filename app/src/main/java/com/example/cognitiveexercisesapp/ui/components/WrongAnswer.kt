@@ -146,7 +146,7 @@ fun NoteText(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.BottomCenter
     ) {
         Text(
-            text = "Note: If you quit the game before completing it, you will not receive any rewards.",
+            text = "Advarsel: Hvis du går ut av spillet uten å fullføre vil du ikke mota noen belønninger.",
             fontSize = 20.sp,
             lineHeight = 30.sp,
             color = Color(0xFF6B6B6B),
@@ -167,8 +167,8 @@ fun AreYouSure(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "You can try this level again, or exit the exercise. \n" +
-                    "What would you like to do?",
+            text = "Du kan prøve denne testen igjen eller avslutte. \n" +
+                    "Hva vil du gjøre?",
             fontSize = 24.sp,
             lineHeight = 36.sp,
             color = Color(0xFF6B6B6B),
@@ -200,7 +200,7 @@ fun EmbarrassedImage(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Oops!\n" +
-                    "You selected the wrong answer.",
+                    "Du valgte feil svar.",
             fontSize = 32.sp,
             lineHeight = 48.sp,
             color = Color(0xFF000000),

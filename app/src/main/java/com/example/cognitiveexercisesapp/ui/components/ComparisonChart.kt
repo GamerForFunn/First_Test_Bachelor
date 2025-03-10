@@ -108,7 +108,7 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
                 .padding(bottom = 380.dp)
         ) {
             Text(
-                text = "Your score",
+                text = "Din score",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -130,7 +130,7 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
             modifier = modifier
         ) {
             Text(
-                text = "Average score",
+                text = "Gjennomsnitt score",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -165,8 +165,8 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
                             .width(50.dp)
                     )
                     Text(
-                        text = "Other players achieved an average of " +
-                                "$userScore points this exercise",
+                        text = "Andre spillere får gjennomsnittlig " +
+                                "$userScore poeng i denne oppgaven",
                         style = whiteTextStyle.copy(fontSize = 12.sp),
                         modifier = Modifier
                             .padding(top = 95.dp)
