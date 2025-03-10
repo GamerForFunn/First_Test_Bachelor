@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.cognitiveexercisesapp.R
 
@@ -55,8 +56,8 @@ fun WordPairingWordButton(
             painter = painterResource(id = R.drawable.sock),
             contentDescription = "Word sock for $word",
             modifier = Modifier
-                .width(140.dp)
-                .height(180.dp)
+                .width(160.dp)
+                .height(200.dp)
                 .graphicsLayer {
                     rotationZ = rotation
                     scaleX = if (shouldMirror) -1f else 1f
@@ -75,7 +76,8 @@ fun WordPairingWordButton(
                 .align(Alignment.Center)
                 .padding(top = 40.dp),
             style = MaterialTheme.typography.headlineSmall,
-            color = Color.Black
+            color = Color.Black,
+            fontWeight = FontWeight.Bold
         )
     }
 }

@@ -30,6 +30,31 @@ class WordPairingRepository {
         )
     )
 
+    // Easy words norwegian
+    private val easyWordSetsNO = listOf(
+        WordPairingWordSet(
+            word1 = "Stor",
+            word2 = "Liten",
+            word3 = "Svær",
+            correctPair = Pair("Stor", "Svær"),
+            difficulty = Game3Difficulty.EASY
+        ),
+        WordPairingWordSet(
+            word1 = "Trist",
+            word2 = "Glad",
+            word3 = "Lykkelig",
+            correctPair = Pair("Glad", "Lykkelig"),
+            difficulty = Game3Difficulty.EASY
+        ),
+        WordPairingWordSet(
+            word1 = "Stygg",
+            word2 = "Vakker",
+            word3 = "Pen",
+            correctPair = Pair("Vakker", "Pen"),
+            difficulty = Game3Difficulty.EASY
+        )
+    )
+
     // Medium words
     private val mediumWordSets = listOf(
         WordPairingWordSet(
@@ -54,6 +79,32 @@ class WordPairingRepository {
             difficulty = Game3Difficulty.MEDIUM
         )
     )
+
+    // Medium words norwegian
+    private val mediumWordSetsNO = listOf(
+        WordPairingWordSet(
+            word1 = "Veltalende",
+            word2 = "Artikulert",
+            word3 = "Taus",
+            correctPair = Pair("Veltalende", "Artikulert"),
+            difficulty = Game3Difficulty.MEDIUM
+        ),
+        WordPairingWordSet(
+            word1 = "Merkelig",
+            word2 = "Normal",
+            word3 = "Usedvanlig",
+            correctPair = Pair("Merkelig", "Usedvanlig"),
+            difficulty = Game3Difficulty.MEDIUM
+        ),
+        WordPairingWordSet(
+            word1 = "Rikelig",
+            word2 = "Massevis",
+            word3 = "Begrenset",
+            correctPair = Pair("Rikelig", "Massevis"),
+            difficulty = Game3Difficulty.MEDIUM
+        )
+    )
+
     // Hard words
     private val hardWordSets = listOf(
         WordPairingWordSet(
@@ -79,11 +130,35 @@ class WordPairingRepository {
         )
     )
 
+    private val hardWordSetsNO = listOf(
+        WordPairingWordSet(
+            word1 = "Grusom",
+            word2 = "Utmerket",
+            word3 = "Fortreffelig",
+            correctPair = Pair("Fortreffelig", "Utmerket"),
+            difficulty = Game3Difficulty.HARD
+        ),
+        WordPairingWordSet(
+            word1 = "Besynderlig",
+            word2 = "Underlig",
+            word3 = "Alminnelig",
+            correctPair = Pair("Besynderlig", "Underlig"),
+            difficulty = Game3Difficulty.HARD
+        ),
+        WordPairingWordSet(
+            word1 = "Utsøkt",
+            word2 = "Tarvelig",
+            word3 = "Ypperlig",
+            correctPair = Pair("Utsøkt", "Ypperlig"),
+            difficulty = Game3Difficulty.HARD
+        )
+    )
+
     fun getWordSetsByDifficulty(difficulty: Game3Difficulty): List<WordPairingWordSet>{
         return when (difficulty){
-            Game3Difficulty.EASY -> easyWordSets
-            Game3Difficulty.MEDIUM -> mediumWordSets
-            Game3Difficulty.HARD -> hardWordSets
+            Game3Difficulty.EASY -> easyWordSetsNO
+            Game3Difficulty.MEDIUM -> mediumWordSetsNO
+            Game3Difficulty.HARD -> hardWordSetsNO
         }
     }
 

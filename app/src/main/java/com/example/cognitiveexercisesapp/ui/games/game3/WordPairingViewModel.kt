@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class WordPairingViewModel : ViewModel() {
 
-    // Set a maximum amount of levels to 5
+    // Set a maximum amount of levels to 3
     private companion object {
         const val MAX_LEVEL = 3
     }
@@ -79,7 +79,7 @@ class WordPairingViewModel : ViewModel() {
     // Handle timeout (+ automatically set answer to wrong)
     private fun handleTimeout() {
         _gameState.value = _gameState.value?.copy(
-            statusMessage = "Oops! You ran out of time ⌛️",
+            statusMessage = "Oops! Tiden gikk ut ⌛️",
             selectedIndices = listOf(0, 1, 2),
             isCorrectPair = false // Force incorrect state
         )
@@ -145,13 +145,11 @@ class WordPairingViewModel : ViewModel() {
     private fun updateScoreAndLevel(navController: NavController) {
         val currentState = _gameState.value ?: return
         val newLevel = currentState.currentLevel + 1
+
         if (newLevel > MAX_LEVEL) {
-            //startNewGame()  Reset to level 1
-            // TODO Here we should calculate the total score and redirect to game summary screen instead
+            // TODO Here we should calculate the total score before redirecting to game summary screen
 
             navController.navigate(Routes.exerciseFinished)
-
-
         } else {
             // Proceed to next level
             _gameState.value = currentState.copy(
@@ -168,22 +166,22 @@ class WordPairingViewModel : ViewModel() {
     // Function to show an error (e.g., "Oops!")
     private fun showError() {
         _gameState.value = _gameState.value?.copy(
-            statusMessage = "🚨 Oops! 🚨" // Set error message
+            statusMessage = "🚨 Ikke helt! 🚨" // Set error message
         )
     }
 
     private fun showSuccess() {
         _gameState.value = _gameState.value?.copy(
-            statusMessage = "✨ Well done! ✨" // Set success message
+            statusMessage = "✨ Bra jobba! ✨" // Set success message
         )
     }
 
     // Function to get a random WordSet
     private fun getRandomWordSet(level: Int): WordPairingWordSet {
-        // For level 1-2: EASY, level 3-4: MEDIUM, level 5: HARD
+        // For level 1: EASY, level 2: MEDIUM, level 3: HARD
         val difficulty = when (level) {
-            1, 2 -> Game3Difficulty.EASY
-            3, 4 -> Game3Difficulty.MEDIUM
+            1 -> Game3Difficulty.EASY
+            2 -> Game3Difficulty.MEDIUM
             else -> Game3Difficulty.HARD
         }
 

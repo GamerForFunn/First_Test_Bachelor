@@ -40,7 +40,7 @@ object GameInstructions {
 
     fun getGame2Instructions(): String {
         return if (currentLanguage == "NO") {
-            "Trykk på det samme bilde som er på toppen av skjermen"
+            "Trykk på det alternativet som er det samme som det store bildet"
         } else {
             "Press the same image as the one above"
         }
@@ -48,9 +48,9 @@ object GameInstructions {
 
     fun getGame3Instructions(): String {
         return if (currentLanguage == "NO") {
-            "Knytt varen til riktig bilde"
+            "Trykk på de to sokkene som har ord av lignende betydning"
         } else {
-            "Associate the item with the correct image"
+            "Press the two socks containing words of similar meaning"
         }
     }
 
