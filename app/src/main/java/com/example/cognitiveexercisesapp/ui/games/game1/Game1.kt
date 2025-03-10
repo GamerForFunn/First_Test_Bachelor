@@ -20,10 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.games.GameScore
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
-
-
-
 
 @Composable
 fun Game1Screen(navController: NavController) {

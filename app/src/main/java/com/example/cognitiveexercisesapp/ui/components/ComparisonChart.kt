@@ -1,17 +1,22 @@
 package com.example.cognitiveexercisesapp.ui.components
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,12 +30,16 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
+import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
+import kotlin.math.round
 
 
 // Function that shows the screen.
@@ -46,6 +55,7 @@ fun ComparisonChartScreen(navController: NavController) {
             ScoreDisplay(
                 // The user score here should be calculated from the exercise. This value is just ph.
                 userScore = 436,
+                averageScore = 500,
                 modifier = Modifier.padding(innerPadding)
             )
             ContinueButton(
@@ -79,7 +89,7 @@ fun ScreenTitle() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 50.dp)
-            .height(117.dp)
+            .height(140.dp)
             .shadow(1.dp)
     ) {
         Text(
@@ -87,7 +97,7 @@ fun ScreenTitle() {
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             modifier = Modifier
-                .padding(top = 45.dp)
+                .padding(top = 75.dp)
                 .width(320.dp)
         )
 
@@ -96,7 +106,7 @@ fun ScreenTitle() {
 
 // Function that is responsible for the "Your score" part. Takes in the user score as argument.
 @Composable
-fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
+fun ScoreDisplay(userScore: Int, averageScore: Int, modifier: Modifier = Modifier) {
         Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -108,29 +118,52 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
                 .padding(bottom = 380.dp)
         ) {
             Text(
-                text = "Din score",
+                text = "Your score",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
-                    .padding(top = 45.dp)
-                    .width(260.dp)
-            )
-            // The score itself. Takes it in as argument from a score calculating function.
-            Text(
-                text = "$userScore",
-                textAlign = TextAlign.Center,
-                style = whiteTextStyle.copy(fontSize = 32.sp),
-                modifier = Modifier
-                    .padding(top = 95.dp)
+                    .padding(bottom = 65.dp)
                     .width(260.dp)
             )
         }
+Box(
+    modifier = modifier
+        .padding(bottom = 380.dp)
+        .animateContentSize()
+) {
+    // The score itself. Takes it in as argument from a score calculating function.
+    Text(
+        text = "$userScore",
+        textAlign = TextAlign.Center,
+        style = whiteTextStyle.copy(fontSize = 32.sp),
+        modifier = Modifier
+            .padding(top = 95.dp)
+            .width(260.dp)
+    )
+    // Animated rectangle representing the user score
+    Box(
+        modifier = Modifier
+            .padding(top = 150.dp)
+            .width(260.dp)
+            .height(60.dp)
+            .background(Color.White, shape = RoundedCornerShape(10.dp))
+    ) {
+        val expanded by remember { mutableStateOf(true) }
+        Box(
+            modifier = Modifier
+                .background(Color.Red, shape = RoundedCornerShape(10.dp))
+                .animateContentSize(animationSpec = tween(durationMillis = 2000))
+                .width(if (expanded)(userScore / 500f * 260).dp else (0).dp)
+                .fillMaxHeight()
+        )
+    }
+}
             // "Average score" box + info
         Box(
             modifier = modifier
         ) {
             Text(
-                text = "Gjennomsnitt score",
+                text = "Average score",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -139,13 +172,30 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
             )
             // Avg. score. PH as comparison between users is not a priority.
             Text(
-                text = "$userScore",
+                text = "$averageScore",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
                     .padding(top = 95.dp)
                     .width(260.dp)
             )
+            // Animated rectangle representing the user score
+            Box(
+                modifier = Modifier
+                    .padding(top = 150.dp)
+                    .width(260.dp)
+                    .height(60.dp)
+                    .background(Color.White, shape = RoundedCornerShape(10.dp))
+            ) {
+                val expanded by remember { mutableStateOf(true) }
+                Box(
+                    modifier = Modifier
+                        .background(Color.Red, shape = RoundedCornerShape(10.dp))
+                        .animateContentSize(animationSpec = tween(durationMillis = 2000))
+                        .width(if (expanded)(averageScore / 500f * 260).dp else (0).dp)
+                        .fillMaxHeight()
+                )
+            }
         }
             // Info point about average user score.
             Box(
@@ -161,16 +211,17 @@ fun ScoreDisplay(userScore: Int, modifier: Modifier = Modifier) {
                         painter = painterResource(id = R.drawable.info_point),
                         contentDescription = "",
                         modifier = Modifier
-                            .padding(top = 95.dp)
+                            .padding(top = 160.dp)
                             .width(50.dp)
+                            .height(40.dp)
                     )
                     Text(
-                        text = "Andre spillere får gjennomsnittlig " +
-                                "$userScore poeng i denne oppgaven",
-                        style = whiteTextStyle.copy(fontSize = 12.sp),
+                        text = "Other players achieved an average of " +
+                                "$averageScore points this exercise",
+                        style = whiteTextStyle.copy(fontSize = 18.sp),
                         modifier = Modifier
-                            .padding(top = 95.dp)
-                            .width(260.dp)
+                            .padding(top = 160.dp)
+                            .width(330.dp)
                     )
                 }
             }
@@ -189,12 +240,14 @@ fun ContinueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             onClick = onClick,
             modifier = Modifier
                 .width(200.dp)
-                .height(50.dp)
+                .height(50.dp),
+            colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
         ) {
             Text(
                 "Continue",
                 fontSize = 24.sp,
-                modifier = Modifier
+                modifier = Modifier,
+                color = Color.White
             )
             Image(
                 painter = painterResource(id = R.drawable.arrow),
@@ -207,13 +260,12 @@ fun ContinueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
-/*
-val comparisonChartObj = ComparisonChartScreen()
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    BachelorAppTheme {
-        comparisonChartObj.ComparisonChartShowScreen()
+    val navController = rememberNavController()
+    CognitiveExercisesAppTheme {
+        ComparisonChartScreen(navController = navController)
     }
-}*/
+}

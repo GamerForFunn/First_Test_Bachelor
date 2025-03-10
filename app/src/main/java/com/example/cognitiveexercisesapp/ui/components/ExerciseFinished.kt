@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,45 +29,56 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.AppTheme
+import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
+import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 import kotlinx.coroutines.delay
-
 
 // This actually displays the score, time, wrong answers etc.
 @Composable
 fun ExerciseFinished(navController: NavController) {
 
-
-
     // Vars for showing the different parts of the screen after a given delay.
     // All of these are supposed to be false EXCEPT for showContent.
-    var showTimeCounter by remember { mutableStateOf(false) }
-    var showWrongAnswers by remember { mutableStateOf(false) }
-    var showLevelDifficulty by remember { mutableStateOf(false) }
-    var showTotalScore by remember { mutableStateOf(false) }
-    var showUserScore by remember { mutableStateOf(false) }
-    var showButton by remember { mutableStateOf(false) }
-    var showContent by remember { mutableStateOf(true) }
+    var showTimeCounter by remember { mutableStateOf(true) }
+    var showWrongAnswers by remember { mutableStateOf(true) }
+    var showLevelDifficulty by remember { mutableStateOf(true) }
+    var showTotalScore by remember { mutableStateOf(true) }
+    var showUserScore by remember { mutableStateOf(true) }
+    var showButton by remember { mutableStateOf(true) }
+    // showContent is currently not in use in this version.
+    // Var showContent by remember { mutableStateOf(true) }
 
+    // Supposed to count the number of confetti images that are displayed. When all are shown,
+    // it will hide them again and show the sparkling images instead.
+    var imageCounter = 0
 
     // Val for deciding how long to delay between each part of the screen in milliseconds.
-    val delayTime = 500L
+    val delayTime = 750L
 
     // Delay for showing the different parts of the screen.
     LaunchedEffect(Unit) {
         delay(delayTime)
         showTimeCounter = true
+        imageCounter++
         delay(delayTime)
         showWrongAnswers = true
+        imageCounter++
         delay(delayTime)
         showLevelDifficulty = true
+        imageCounter++
         delay(delayTime)
         showTotalScore = true
+        imageCounter++
         showUserScore = true
+        imageCounter++
         delay(delayTime)
+        if (imageCounter == 5) {
         showButton = true
+        }
     }
     // The different parts of the screen are displayed after a delay.
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -150,7 +162,7 @@ fun StartScreen(onStartClicked: () -> Unit, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Button(onClick = onStartClicked) {
-            Text("Start oppgave")
+            Text("Start Exercise")
         }
     }
 }
@@ -163,11 +175,13 @@ fun FinishedExercise(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = "Oppgave fullført",
+            text = "Exercise finished",
             textAlign = TextAlign.Center,
+            style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 30.sp,
+            color = Color(0xFF40376E),
             modifier = Modifier
-                .padding(top = 100.dp) // Optional: add top padding if needed
+                .padding(top = 100.dp) 
                 .width(270.dp)
         )
     }
@@ -188,10 +202,11 @@ fun ShowTimeCounter(imageVisibility: Boolean, modifier: Modifier = Modifier) {
         Text(
             text = "Time: $seconds",
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            style = whiteTextStyle.copy(fontSize = 32.sp),
+            color = Color(0xFF007AFF),
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(bottom = 400.dp)
+                .padding(bottom = 340.dp)
                 .width(250.dp)
         )
         if (imageIsVisible) {
@@ -235,10 +250,11 @@ fun ShowWrongAnswers(
         Text(
             text = "Wrong Answers: $wrongAnswers",
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            color = Color(0xFF007AFF),
+            style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(bottom = 340.dp)
+                .padding(bottom = 280.dp)
                 .width(250.dp)
         )
         if (imageIsVisible) {
@@ -283,10 +299,11 @@ fun ShowLevelDifficulty(
         Text(
             text = "Level $levelDifficulty: $difficultyBonusPoints",
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            color = Color(0xFF007AFF),
+            style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(bottom = 280.dp)
+                .padding(bottom = 220.dp)
                 .width(250.dp)
         )
         if (imageIsVisible) {
@@ -323,7 +340,8 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
         Text(
             text = "Your score", // PH until score system is up n going
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            color = Color(0xFF007AFF),
+            style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 30.sp,
             modifier = Modifier
                 .padding(bottom = 105.dp)
@@ -344,7 +362,7 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(50.dp)
-                    .padding(top = 85.dp)
+                    .padding(top = 95.dp)
                     .size(70.dp)
             )
         }
@@ -362,7 +380,8 @@ fun CalculateUserScore(difficultyBonusPoints: Int, timeSpent: Int, modifier: Mod
         Text(
             text = "$userScore", // PH until score system is up n going
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            color = Color(0xFF007AFF),
+            style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 50.sp,
             modifier = Modifier
                 .width(250.dp)
@@ -384,12 +403,14 @@ fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier 
                 onClick = onClick,
                 modifier = Modifier
                     .width(200.dp)
-                    .height(50.dp)
+                    .height(50.dp),
+                colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
             ) {
                 Text(
                     "Continue",
                     fontSize = 24.sp,
-                    modifier = Modifier
+                    modifier = Modifier,
+                    color = Color.White
                 )
                 Image(
                     painter = painterResource(id = R.drawable.arrow),
@@ -406,11 +427,13 @@ fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier 
 
 
 
-/* TODO
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    BachelorAppTheme {
-        showScreenObj.MainScreen()
+fun ExerciseFinishedPreview() {
+    val navController = rememberNavController()
+    CognitiveExercisesAppTheme {
+        ExerciseFinished(
+            navController = navController
+        )
     }
-}*/
+}
