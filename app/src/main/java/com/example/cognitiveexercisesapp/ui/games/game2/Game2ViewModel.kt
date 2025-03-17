@@ -45,24 +45,24 @@ class Game2ViewModel : ViewModel() {
         generateRandomImages()
     }
 
-    private fun generateRandomImages() {
-        val difficulty = Game2Config.calculateDifficulty()
-        _randomImage1.update { getRandomImage(difficulty) }
+    private fun generateRandomImages() { //Function for getting random images with correct difficulty
+        val difficulty = Game2Config.calculateDifficulty() //Gets the global difficulty value
+        _randomImage1.update { getRandomImage(difficulty) }//Gets a random image with correct difficulty
         _randomImage2.update {
-            var newImage = getRandomImage(difficulty)
+            var newImage = getRandomImage(difficulty) //getting random image but checking for duplicates
             while (newImage == _randomImage1.value) {
                 newImage = getRandomImage(difficulty)
             }
             newImage
         }
-        _randomImage3.update {
+        _randomImage3.update { //Getting another random image but checking for two different duplicates
             var newImage = getRandomImage(difficulty)
             while (newImage == _randomImage1.value || newImage == _randomImage2.value) {
                 newImage = getRandomImage(difficulty)
             }
             newImage
         }
-        _winnerImage.update {
+        _winnerImage.update { //Setting the winner image to be one of the images randomly
             val random = (1..3).random()
             when (random) {
                 1 -> _randomImage1.value
@@ -74,9 +74,10 @@ class Game2ViewModel : ViewModel() {
     }
 
     private fun getRandomImage(difficulty : String): Int {
-        var output = 404
+        var output = 404 //Setting a base value, easier for error checking if something goes wrong
         if (difficulty == "easy"){
-        val images = listOf(
+            //TODO We have no copyright to these images, this needs to change when this gets launched for real on an app store
+        val images = listOf( //Easy images are simple fruit images
             R.drawable.appletest,
             R.drawable.bananatest,
             R.drawable.orangetest,
@@ -89,7 +90,7 @@ class Game2ViewModel : ViewModel() {
         output = images.random()
         }
         if(difficulty == "medium"){
-            val images = listOf(
+            val images = listOf( //Medium images are celebrities, if this is medium or hard is up for debate
                 R.drawable.celeb1,
                 R.drawable.celeb2,
                 R.drawable.celeb3,
@@ -103,7 +104,7 @@ class Game2ViewModel : ViewModel() {
             )
             return images.random()
         }
-        if(difficulty == "hard"){
+        if(difficulty == "hard"){ //Hard images are boats, can be more difficult because of a lot of images look quite similar
             val images = listOf(
                 R.drawable.boatimage1,
                 R.drawable.boatimage2,
@@ -128,7 +129,7 @@ class Game2ViewModel : ViewModel() {
     fun stopTimer() {
         //TODO
     }
-    fun resetGame() {
+    fun resetGame() {//This has a lot of old code from XML version of game, only important thing is generateRandomImages()
         elapsedTime = 0
         _timerText.update { "00:00" }
         generateRandomImages()

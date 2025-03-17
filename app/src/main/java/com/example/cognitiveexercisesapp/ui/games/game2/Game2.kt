@@ -68,7 +68,7 @@ fun Game2Screen(navController: NavController) {
             if (currentRound < Game2Config.rounds) {
                 // Move to the next round
                 currentRound++
-                viewModel.resetGame()
+                viewModel.resetGame() //Starts function to restart game
 
             } else {
                 // Navigate to exerciseFinished after all rounds
