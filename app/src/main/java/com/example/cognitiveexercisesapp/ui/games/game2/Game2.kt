@@ -55,21 +55,12 @@ fun Game2Screen(navController: NavController) {
     // Track the current round
     var currentRound by remember { mutableStateOf(1) }
 
-    // Store the grid list in state so it resets each round
-    var gridList by remember { mutableStateOf(getAmountAndRangeBasedOnDifficulty()) }
-
-
-    // Check if all numbers are null (round finished)
-    val isRoundFinished = gridList.all { it == null }
-
     // Handle round progression
     fun roundChecker() {
-
             if (currentRound < Game2Config.rounds) {
                 // Move to the next round
                 currentRound++
                 viewModel.resetGame() //Starts function to restart game
-
             } else {
                 // Navigate to exerciseFinished after all rounds
                 navController.navigate(Routes.exerciseFinished)
@@ -101,11 +92,11 @@ fun Game2Screen(navController: NavController) {
                 ),
                 modifier = Modifier.padding(8.dp)
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             Image(
                 painter = painterResource(id = winnerImage),
                 contentDescription = "Correct Image",
-                modifier = Modifier.size(300.dp),
+                modifier = Modifier.size(350.dp),
                 contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -120,8 +111,8 @@ fun Game2Screen(navController: NavController) {
                     contentDescription = "Left Image",
                     modifier = Modifier
                         .size(120.dp)
-                        .clickable { if(randomImage1 == winnerImage){roundChecker()}
-                                   else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
+                        .clickable { if(randomImage1 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
+                                   else{navController.navigate(Routes.wrongAnswer+"/Game2")}}, //If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
                 Image(
@@ -129,8 +120,8 @@ fun Game2Screen(navController: NavController) {
                     contentDescription = "Middle Image",
                     modifier = Modifier
                         .size(120.dp)
-                        .clickable { if(randomImage2 == winnerImage){roundChecker()}
-                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
+                        .clickable { if(randomImage2 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
+                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}}, //If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
                 Image(
@@ -138,12 +129,12 @@ fun Game2Screen(navController: NavController) {
                     contentDescription = "Right Image",
                     modifier = Modifier
                         .size(120.dp)
-                        .clickable { if(randomImage3 == winnerImage){roundChecker()}
-                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
+                        .clickable { if(randomImage3 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
+                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}},//If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(64.dp))
         }
         if (isRetryVisible) {
             Button(
