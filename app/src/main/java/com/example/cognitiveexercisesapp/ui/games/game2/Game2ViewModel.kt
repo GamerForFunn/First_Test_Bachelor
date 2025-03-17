@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import android.graphics.Color as AndroidColor
 import androidx.compose.ui.graphics.Color as ComposeColor
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.game3model.Game3Difficulty
+import com.example.cognitiveexercisesapp.ui.games.game2.Game2Config
 import kotlinx.coroutines.flow.update
 
 class Game2ViewModel : ViewModel() {
@@ -44,18 +46,19 @@ class Game2ViewModel : ViewModel() {
     }
 
     private fun generateRandomImages() {
-        _randomImage1.update { getRandomImage() }
+        val difficulty = Game2Config.calculateDifficulty()
+        _randomImage1.update { getRandomImage(difficulty) }
         _randomImage2.update {
-            var newImage = getRandomImage()
+            var newImage = getRandomImage(difficulty)
             while (newImage == _randomImage1.value) {
-                newImage = getRandomImage()
+                newImage = getRandomImage(difficulty)
             }
             newImage
         }
         _randomImage3.update {
-            var newImage = getRandomImage()
+            var newImage = getRandomImage(difficulty)
             while (newImage == _randomImage1.value || newImage == _randomImage2.value) {
-                newImage = getRandomImage()
+                newImage = getRandomImage(difficulty)
             }
             newImage
         }
@@ -70,7 +73,9 @@ class Game2ViewModel : ViewModel() {
         }
     }
 
-    private fun getRandomImage(): Int {
+    private fun getRandomImage(difficulty : String): Int {
+        var output = 404
+        if (difficulty == "easy"){
         val images = listOf(
             R.drawable.appletest,
             R.drawable.bananatest,
@@ -81,7 +86,37 @@ class Game2ViewModel : ViewModel() {
             R.drawable.peartest,
             R.drawable.tomatotest
         )
-        return images.random()
+        output = images.random()
+        }
+        if(difficulty == "medium"){
+            val images = listOf(
+                R.drawable.celeb1,
+                R.drawable.celeb2,
+                R.drawable.celeb3,
+                R.drawable.celeb4,
+                R.drawable.celeb5,
+                R.drawable.celeb6,
+                R.drawable.celeb7,
+                R.drawable.celeb8,
+                R.drawable.celeb9
+
+            )
+            return images.random()
+        }
+        if(difficulty == "hard"){
+            val images = listOf(
+                R.drawable.boatimage1,
+                R.drawable.boatimage2,
+                R.drawable.boatimage3,
+                R.drawable.boatimage4,
+                R.drawable.boatimage5,
+                R.drawable.boatimage6,
+                R.drawable.boatimage7
+            )
+            output = images.random()
+        }
+        return output
+
     }
     fun onRetryClick(){resetGame()}
 

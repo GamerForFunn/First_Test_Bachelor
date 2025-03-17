@@ -11,18 +11,19 @@ object Game2Config {
 
 
 
-    val amount: Int
-        get() = calculateAmountAndRange(difficulty).first
-    val range: Int
-        get() = calculateAmountAndRange(difficulty).second
 
-    fun calculateAmountAndRange(difficulty: Int): Pair<Int, Int> {
+
+    fun calculateDifficulty(): String {
+        val findDifficulty = GameInstructions.difficulty
         require(difficulty in 1..100) { "Difficulty must be between 1 and 100" }
-
-        val amount = 3 + (difficulty * 15) / 100  // Scales from 3 to 20
-        val range = 20 + (difficulty * 79) / 100  // Scales from 20 to 99
-
-        return Pair(amount, range)
+        var difficultyGame2 = "easy"
+        difficultyGame2 = when{
+            findDifficulty < 33 -> "easy"
+            findDifficulty < 66 -> "medium"
+            findDifficulty > 66 -> "hard"
+            else -> "easy"
+        }
+        return difficultyGame2
     }
 
 
