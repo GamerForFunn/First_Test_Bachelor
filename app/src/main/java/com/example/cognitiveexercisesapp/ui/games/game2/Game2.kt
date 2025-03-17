@@ -119,7 +119,7 @@ fun Game2Screen(navController: NavController) {
                     painter = painterResource(id = randomImage1),
                     contentDescription = "Left Image",
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(120.dp)
                         .clickable { if(randomImage1 == winnerImage){roundChecker()}
                                    else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
                     contentScale = ContentScale.Fit
@@ -128,7 +128,7 @@ fun Game2Screen(navController: NavController) {
                     painter = painterResource(id = randomImage2),
                     contentDescription = "Middle Image",
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(120.dp)
                         .clickable { if(randomImage2 == winnerImage){roundChecker()}
                         else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
                     contentScale = ContentScale.Fit
@@ -137,7 +137,7 @@ fun Game2Screen(navController: NavController) {
                     painter = painterResource(id = randomImage3),
                     contentDescription = "Right Image",
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(120.dp)
                         .clickable { if(randomImage3 == winnerImage){roundChecker()}
                         else{navController.navigate(Routes.wrongAnswer+"/Game2")}},
                     contentScale = ContentScale.Fit
