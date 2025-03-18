@@ -147,7 +147,7 @@ fun ScoreDisplayDoctorsComment(userScore: Int, modifier: Modifier = Modifier) {
                 val expanded by remember { mutableStateOf(true) }
                 Box(
                     modifier = Modifier
-                        .background(Color.Red, shape = RoundedCornerShape(10.dp))
+                        .background(Color(0xFFB23259), shape = RoundedCornerShape(10.dp))
                         .animateContentSize(animationSpec = tween(durationMillis = 2000))
                         .width(if (expanded)(userScore / 500f * 260).dp else (0).dp)
                         .fillMaxHeight()

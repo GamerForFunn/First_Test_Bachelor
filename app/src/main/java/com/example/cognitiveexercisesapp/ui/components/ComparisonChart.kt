@@ -90,7 +90,8 @@ fun ScreenTitle() {
             .fillMaxWidth()
             .padding(bottom = 50.dp)
             .height(140.dp)
-            .shadow(1.dp)
+            .shadow(3.dp)
+            .background(Color(0xFF40376E), shape = RoundedCornerShape(10.dp))
     ) {
         Text(
             text = "Comparison chart",
@@ -151,7 +152,7 @@ Box(
         val expanded by remember { mutableStateOf(true) }
         Box(
             modifier = Modifier
-                .background(Color.Red, shape = RoundedCornerShape(10.dp))
+                .background(Color(0xFFB23259), shape = RoundedCornerShape(10.dp))
                 .animateContentSize(animationSpec = tween(durationMillis = 2000))
                 .width(if (expanded)(userScore / 500f * 260).dp else (0).dp)
                 .fillMaxHeight()
@@ -190,7 +191,7 @@ Box(
                 val expanded by remember { mutableStateOf(true) }
                 Box(
                     modifier = Modifier
-                        .background(Color.Red, shape = RoundedCornerShape(10.dp))
+                        .background(Color(0xFFB23259), shape = RoundedCornerShape(10.dp))
                         .animateContentSize(animationSpec = tween(durationMillis = 2000))
                         .width(if (expanded)(averageScore / 500f * 260).dp else (0).dp)
                         .fillMaxHeight()
