@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import android.graphics.Color as AndroidColor
 import androidx.compose.ui.graphics.Color as ComposeColor
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.game3model.Game3Difficulty
+import com.example.cognitiveexercisesapp.ui.games.game2.Game2Config
 import kotlinx.coroutines.flow.update
 
 class Game2ViewModel : ViewModel() {
@@ -43,23 +45,24 @@ class Game2ViewModel : ViewModel() {
         generateRandomImages()
     }
 
-    private fun generateRandomImages() {
-        _randomImage1.update { getRandomImage() }
+    private fun generateRandomImages() { //Function for getting random images with correct difficulty
+        val difficulty = Game2Config.calculateDifficulty() //Gets the global difficulty value
+        _randomImage1.update { getRandomImage(difficulty) }//Gets a random image with correct difficulty
         _randomImage2.update {
-            var newImage = getRandomImage()
+            var newImage = getRandomImage(difficulty) //getting random image but checking for duplicates
             while (newImage == _randomImage1.value) {
-                newImage = getRandomImage()
+                newImage = getRandomImage(difficulty)
             }
             newImage
         }
-        _randomImage3.update {
-            var newImage = getRandomImage()
+        _randomImage3.update { //Getting another random image but checking for two different duplicates
+            var newImage = getRandomImage(difficulty)
             while (newImage == _randomImage1.value || newImage == _randomImage2.value) {
-                newImage = getRandomImage()
+                newImage = getRandomImage(difficulty)
             }
             newImage
         }
-        _winnerImage.update {
+        _winnerImage.update { //Setting the winner image to be one of the images randomly
             val random = (1..3).random()
             when (random) {
                 1 -> _randomImage1.value
@@ -70,8 +73,11 @@ class Game2ViewModel : ViewModel() {
         }
     }
 
-    private fun getRandomImage(): Int {
-        val images = listOf(
+    private fun getRandomImage(difficulty : String): Int {
+        var output = 404 //Setting a base value, easier for error checking if something goes wrong
+        if (difficulty == "easy"){
+            //TODO We have no copyright to these images, this needs to change when this gets launched for real on an app store
+        val images = listOf( //Easy images are simple fruit images
             R.drawable.appletest,
             R.drawable.bananatest,
             R.drawable.orangetest,
@@ -81,7 +87,37 @@ class Game2ViewModel : ViewModel() {
             R.drawable.peartest,
             R.drawable.tomatotest
         )
-        return images.random()
+        output = images.random()
+        }
+        if(difficulty == "medium"){
+            val images = listOf( //Medium images are celebrities, if this is medium or hard is up for debate
+                R.drawable.celeb1,
+                R.drawable.celeb2,
+                R.drawable.celeb3,
+                R.drawable.celeb4,
+                R.drawable.celeb5,
+                R.drawable.celeb6,
+                R.drawable.celeb7,
+                R.drawable.celeb8,
+                R.drawable.celeb9
+
+            )
+            return images.random()
+        }
+        if(difficulty == "hard"){ //Hard images are boats, can be more difficult because of a lot of images look quite similar
+            val images = listOf(
+                R.drawable.boatimage1,
+                R.drawable.boatimage2,
+                R.drawable.boatimage3,
+                R.drawable.boatimage4,
+                R.drawable.boatimage5,
+                R.drawable.boatimage6,
+                R.drawable.boatimage7
+            )
+            output = images.random()
+        }
+        return output
+
     }
     fun onRetryClick(){resetGame()}
 
@@ -93,7 +129,7 @@ class Game2ViewModel : ViewModel() {
     fun stopTimer() {
         //TODO
     }
-    fun resetGame() {
+    fun resetGame() {//This has a lot of old code from XML version of game, only important thing is generateRandomImages()
         elapsedTime = 0
         _timerText.update { "00:00" }
         generateRandomImages()
