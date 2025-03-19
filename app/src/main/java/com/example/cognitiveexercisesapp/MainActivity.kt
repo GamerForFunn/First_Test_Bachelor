@@ -19,18 +19,22 @@ import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenI
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
-import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
+import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
 
 class MainActivity : ComponentActivity() {
-
-    // Most of it is taken straight out of the Android documentation.
-    private val notificationRequestPermission = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /* This is responsible for the periodic notification that will be sent when the app is not
+        * open. According to the Android WorkManager documentation, the minimum cycle length
+        * is 15 minutes. */
         NotificationScheduler.schedulePeriodicNotification(this)
+
+        /* This notification is only for testing the actual notification design wise, txt etc.
+        * Will be remover or commented out later. */
+        NotificationScheduler.scheduleTestNotification(this, 3_000)
 
         enableEdgeToEdge()
         setContent {
