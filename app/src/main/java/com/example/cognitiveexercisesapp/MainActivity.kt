@@ -1,12 +1,23 @@
 package com.example.cognitiveexercisesapp
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.cognitiveexercisesapp.ui.components.ComparisonChartScreen
 import com.example.cognitiveexercisesapp.ui.components.DoctorsCommentShowScreen
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
@@ -14,16 +25,27 @@ import com.example.cognitiveexercisesapp.ui.components.WrongAnswerScreen
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Screen
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Screen
 import com.example.cognitiveexercisesapp.ui.games.game3.Game3Screen
-import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
+import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
+import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
+import com.example.cognitiveexercisesapp.ui.notification.Notifier
+import com.example.cognitiveexercisesapp.ui.notification.Notifier.Companion.CHANNEL_ID
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
+
+    // Most of it is taken straight out of the Android documentation.
+    private val notificationRequestPermission = 1001
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        NotificationScheduler.schedulePeriodicNotification(this)
+
         enableEdgeToEdge()
         setContent {
             CognitiveExercisesAppTheme {
@@ -32,11 +54,11 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.homeScreen) {
                         HomeScreen(navController)
                     }
-                    composable(Routes.wrongAnswer+"/{currentGame}") {
+                    composable(Routes.wrongAnswer + "/{currentGame}") {
                         val currentGame = it.arguments?.getString("currentGame")
-                        WrongAnswerScreen(navController,currentGame?:"No Game")
+                        WrongAnswerScreen(navController, currentGame ?: "No Game")
                     }
-                    composable(Routes.comparisonChart){
+                    composable(Routes.comparisonChart) {
                         ComparisonChartScreen(navController)
                     }
                     composable(Routes.exerciseFinished) {
