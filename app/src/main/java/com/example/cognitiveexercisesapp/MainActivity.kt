@@ -1,23 +1,12 @@
 package com.example.cognitiveexercisesapp
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.cognitiveexercisesapp.ui.components.ComparisonChartScreen
 import com.example.cognitiveexercisesapp.ui.components.DoctorsCommentShowScreen
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
@@ -31,10 +20,7 @@ import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenI
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
-import com.example.cognitiveexercisesapp.ui.notification.Notifier
-import com.example.cognitiveexercisesapp.ui.notification.Notifier.Companion.CHANNEL_ID
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
-import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
 
