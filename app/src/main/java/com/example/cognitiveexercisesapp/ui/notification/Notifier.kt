@@ -1,9 +1,15 @@
 package com.example.cognitiveexercisesapp.ui.notification
 
+import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.example.cognitiveexercisesapp.MainActivity
 import com.example.cognitiveexercisesapp.R
 
@@ -50,4 +56,54 @@ class Notifier(private val context: Context) {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun promptNotificationPermission(activity: MainActivity) {
+
+        var notificationPermissionGranted: Boolean
+
+        val requestPermissionLauncher =
+            activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                notificationPermissionGranted = isGranted
+                if (notificationPermissionGranted) {
+                    // Notifications are allowed, continue normally
+                } else {
+                    // Notifications not allowed, handle accordingly
+                }
+            }
+
+        if (ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            notificationPermissionGranted = true
+        }
+
+    }
+
+fun promptSystemNotificationPermission(activity: MainActivity) {
+    var systemPermissionGranted: Boolean
+
+    val requestSystemPermissionLauncher =
+        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            systemPermissionGranted = isGranted
+            if (systemPermissionGranted) {
+                // Notifications are allowed, continue normally
+            } else {
+                // Notifications not allowed, handle accordingly
+            }
+        }
+
+    if (ContextCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.SYSTEM_ALERT_WINDOW
+        ) != PackageManager.PERMISSION_GRANTED) {
+        requestSystemPermissionLauncher.launch(android.Manifest.permission.SYSTEM_ALERT_WINDOW)
+    } else {
+        systemPermissionGranted = true
+    }
+}
+
 }
