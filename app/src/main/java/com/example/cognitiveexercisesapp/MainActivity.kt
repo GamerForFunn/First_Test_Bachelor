@@ -37,8 +37,10 @@ class MainActivity : ComponentActivity() {
         val notifierObj = Notifier(this)
 
         // Prompts the user for both normal notifications and pop-up notification.
-        notifierObj.promptNotificationPermission(this)
-        notifierObj.promptSystemNotificationPermission(this)
+        // Checks for normal notifications first.
+        if (notifierObj.promptNotificationPermission(this)) {
+            notifierObj.promptSystemNotificationPermission(this)
+        }
 
         /* This is responsible for the periodic notification that will be sent when the app is not
         * open. According to the Android WorkManager documentation, the minimum cycle length

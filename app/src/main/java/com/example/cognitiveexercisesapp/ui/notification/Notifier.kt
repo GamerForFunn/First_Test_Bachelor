@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -58,7 +59,7 @@ class Notifier(private val context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun promptNotificationPermission(activity: MainActivity) {
+    fun promptNotificationPermission(activity: MainActivity): Boolean {
 
         var notificationPermissionGranted: Boolean
 
@@ -80,30 +81,19 @@ class Notifier(private val context: Context) {
         } else {
             notificationPermissionGranted = true
         }
-
+        return true
     }
 
-fun promptSystemNotificationPermission(activity: MainActivity) {
-    var systemPermissionGranted: Boolean
-
-    val requestSystemPermissionLauncher =
-        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            systemPermissionGranted = isGranted
-            if (systemPermissionGranted) {
-                // Notifications are allowed, continue normally
-            } else {
-                // Notifications not allowed, handle accordingly
-            }
+    fun promptSystemNotificationPermission(activity: MainActivity): Boolean {
+        if (!android.provider.Settings.canDrawOverlays(activity)) {
+            val intent = Intent(
+                android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:${activity.packageName}")
+            )
+            activity.startActivity(intent)
         }
-
-    if (ContextCompat.checkSelfPermission(
-            context,
-            android.Manifest.permission.SYSTEM_ALERT_WINDOW
-        ) != PackageManager.PERMISSION_GRANTED) {
-        requestSystemPermissionLauncher.launch(android.Manifest.permission.SYSTEM_ALERT_WINDOW)
-    } else {
-        systemPermissionGranted = true
+        return true
     }
-}
+
 
 }
