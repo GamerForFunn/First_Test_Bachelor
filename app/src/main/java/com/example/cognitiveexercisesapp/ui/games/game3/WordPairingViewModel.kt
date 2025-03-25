@@ -84,7 +84,7 @@ class WordPairingViewModel : ViewModel() {
             isCorrectPair = false // Force incorrect state
         )
         viewModelScope.launch {
-            delay(2000) // Show red color for 2 seconds
+            delay(3000L) // Show red color for 3 seconds
             resetSelection()
             startTimer() // Restart timer for next attempt
         }
@@ -122,8 +122,11 @@ class WordPairingViewModel : ViewModel() {
             )
 
             if (isCorrect) {
-                showSuccess()
-                updateScoreAndLevel(navController)
+                viewModelScope.launch {
+                    showSuccess()
+                    delay(3000L)
+                    updateScoreAndLevel(navController)
+                }
             } else {
                 showError()
             }
