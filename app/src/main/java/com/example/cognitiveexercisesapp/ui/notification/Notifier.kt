@@ -1,5 +1,6 @@
 package com.example.cognitiveexercisesapp.ui.notification
 
+import MainActivity
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
@@ -11,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.example.cognitiveexercisesapp.MainActivity
 import com.example.cognitiveexercisesapp.R
 
 class Notifier(private val context: Context) {
