@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import android.graphics.Color as AndroidColor
 import androidx.compose.ui.graphics.Color as ComposeColor
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.data.game3model.Game3Difficulty
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Config
 import kotlinx.coroutines.flow.update
@@ -25,7 +26,7 @@ class Game2ViewModel : ViewModel() {
     private val _winnerImage = MutableStateFlow(0)
     val winnerImage: StateFlow<Int> = _winnerImage.asStateFlow()
 
-    private val _game2WelcomeText = MutableStateFlow("Please select the correct image!")
+    private var _game2WelcomeText = MutableStateFlow("Please select the correct image!")
     val game2WelcomeText: StateFlow<String> = _game2WelcomeText.asStateFlow()
 
     private val _timerText = MutableStateFlow("00:00")
@@ -39,12 +40,9 @@ class Game2ViewModel : ViewModel() {
 
     private var elapsedTime = 0L
 
-
-
     init {
         generateRandomImages()
     }
-
     private fun generateRandomImages() { //Function for getting random images with correct difficulty
         val difficulty = Game2Config.calculateDifficulty() //Gets the global difficulty value
         _randomImage1.update { getRandomImage(difficulty) }//Gets a random image with correct difficulty
@@ -133,6 +131,6 @@ class Game2ViewModel : ViewModel() {
         elapsedTime = 0
         _timerText.update { "00:00" }
         generateRandomImages()
-        _game2WelcomeText.update { "Please select the correct image!" }
+
     }
 }

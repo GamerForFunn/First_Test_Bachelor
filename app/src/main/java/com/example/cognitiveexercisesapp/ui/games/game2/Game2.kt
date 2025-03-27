@@ -28,13 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Config
 import com.example.cognitiveexercisesapp.ui.games.game1.getAmountAndRangeBasedOnDifficulty
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
@@ -47,7 +50,6 @@ fun Game2Screen(navController: NavController) {
     val randomImage2 by viewModel.randomImage2.collectAsState()
     val randomImage3 by viewModel.randomImage3.collectAsState()
     val winnerImage by viewModel.winnerImage.collectAsState()
-    val game2WelcomeText by viewModel.game2WelcomeText.collectAsState()
     val timerText by viewModel.timerText.collectAsState()
     val isRetryVisible by viewModel.isRetryVisible.collectAsState()
     val backgroundColor by viewModel.backgroundColor.collectAsState()
@@ -84,7 +86,11 @@ fun Game2Screen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = game2WelcomeText,
+                text = when (GameInstructions.currentLanguage){ //Switches languages
+                    "EN" -> "Please select the correct image!"
+                    "NO" -> "Venligst velg det riktige bildet"
+                    else -> "Venligst velg det riktige bildet"
+                },
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
