@@ -1,9 +1,16 @@
-package com.example.cognitiveexercisesapp
-
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,13 +26,31 @@ import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenI
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
-import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
+import com.example.cognitiveexercisesapp.ui.notification.Notifier
+import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 
 class MainActivity : ComponentActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val notifierObj = Notifier(this)
+
+        lateinit var overlayPermissionLauncher: ActivityResultLauncher<Intent>
+
+        // Check this on a button click or some other trigger
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.packageName))
+            overlayPermissionLauncher.launch(intent)
+        }
+
+        // Prompts the user for both normal notifications and pop-up notification.
+        // Checks for normal notifications first.
+        if (notifierObj.promptNotificationPermission(this)) {
+            notifierObj.promptSystemNotificationPermission(this)
+        }
 
         /* This is responsible for the periodic notification that will be sent when the app is not
         * open. According to the Android WorkManager documentation, the minimum cycle length

@@ -31,7 +31,7 @@ fun Game3Screen (navController: NavController) {
     // Reset selection after validation
     LaunchedEffect(gameState?.isCorrectPair) {
         gameState?.isCorrectPair?.let {
-            delay(1000) // Wait 1 second
+            delay(3000) // Wait 3 second
             viewModel.resetSelection()
         }
     }
