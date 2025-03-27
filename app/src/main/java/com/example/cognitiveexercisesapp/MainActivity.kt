@@ -1,3 +1,5 @@
+package com.example.cognitiveexercisesapp
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -38,12 +40,12 @@ class MainActivity : ComponentActivity() {
 
         val notifierObj = Notifier(this)
 
-        lateinit var overlayPermissionLauncher: ActivityResultLauncher<Intent>
+        //lateinit var overlayPermissionLauncher: ActivityResultLauncher<Intent>
 
         // Check this on a button click or some other trigger
         if (!Settings.canDrawOverlays(this)) {
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.packageName))
-            overlayPermissionLauncher.launch(intent)
+            //overlayPermissionLauncher.launch(intent)
         }
 
         // Prompts the user for both normal notifications and pop-up notification.

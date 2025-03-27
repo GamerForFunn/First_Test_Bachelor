@@ -1,6 +1,6 @@
 package com.example.cognitiveexercisesapp.ui.notification
 
-import MainActivity
+import com.example.cognitiveexercisesapp.MainActivity
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
