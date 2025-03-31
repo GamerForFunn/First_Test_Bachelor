@@ -48,7 +48,7 @@ object GameInstructions {
 
     fun getGame3Instructions(): String {
         return if (currentLanguage == "NO") {
-            "Trykk på de to sokkene som har ord av lignende betydning"
+            "Trykk på de to sokkene som inneholder ord av lik betydning for å finne det riktige paret."
         } else {
             "Press the two socks containing words of similar meaning"
         }

@@ -48,7 +48,7 @@ fun Game3Screen (navController: NavController) {
                 style = MaterialTheme.typography.headlineSmall
             )
             Text(
-                text = "Lignende betydning",
+                text = "Par sokkene!",
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(top = 16.dp)
             )
