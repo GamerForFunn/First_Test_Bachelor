@@ -1,7 +1,6 @@
 package com.example.cognitiveexercisesapp
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +11,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,18 +32,27 @@ import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 
 class MainActivity : ComponentActivity() {
 
+    private lateinit var overlayPermissionLauncher: ActivityResultLauncher<Intent>
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val notifierObj = Notifier(this)
 
-        //lateinit var overlayPermissionLauncher: ActivityResultLauncher<Intent>
+        overlayPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            // Optionally, you can check if permission was granted and take further action.
+        }
 
-        // Check this on a button click or some other trigger
+        // Check and request overlay permission if not granted.
         if (!Settings.canDrawOverlays(this)) {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.packageName))
-            //overlayPermissionLauncher.launch(intent)
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            overlayPermissionLauncher.launch(intent)
         }
 
         // Prompts the user for both normal notifications and pop-up notification.
@@ -101,6 +108,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.game3Screen) {
                         Game3Screen(navController)
+                    }
+                    composable(Routes.homeScreen) {
+                        HomeScreen(navController)
                     }
                 }
             }
