@@ -47,7 +47,7 @@ fun Game2ScreenInstructions(navController: NavController) {
             Spacer(modifier = Modifier.width(10.dp))
 
             Button(
-                onClick = { navController.navigate(Routes.game3Screen) },
+                onClick = { navController.navigate(Routes.game2Screen) },
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
