@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,12 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.components.WordPairingWordButton
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Game3Screen (navController: NavController) {
     val viewModel: WordPairingViewModel = viewModel()
@@ -37,6 +43,22 @@ fun Game3Screen (navController: NavController) {
     }
 
     if (gameState != null) {
+        TopAppBar(
+            title = { Text(text = "") },
+            actions = {
+                Button(
+                    onClick = { navController.navigate(Routes.game3ScreenInstructions) },
+                    modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
+                ) {
+                    Text(
+                        text = "Hjelp",
+                        fontSize = 20.sp, // Increased font size
+                        color = Color.Black // Set the text color
+                    )
+                }
+            }
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()

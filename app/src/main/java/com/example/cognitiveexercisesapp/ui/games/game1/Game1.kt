@@ -12,10 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.games.GameScore
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Game1Screen(navController: NavController) {
     // Track the current round
@@ -63,6 +68,22 @@ fun Game1Screen(navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally // Center children horizontally
         ) {
+            TopAppBar(
+                title = { Text(text = "") },
+                actions = {
+                    Button(
+                        onClick = { navController.navigate(Routes.game1ScreenInstructions) },
+                        modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
+                    ) {
+                        Text(
+                            text = "Hjelp",
+                            fontSize = 20.sp, // Increased font size
+                            color = Color.Black // Set the text color
+                        )
+                    }
+                }
+            )
             // Display the current round
             if (Game1Config.rounds > 1){
                 Text(
