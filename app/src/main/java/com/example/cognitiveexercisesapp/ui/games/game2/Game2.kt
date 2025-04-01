@@ -15,7 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -43,6 +46,7 @@ import com.example.cognitiveexercisesapp.ui.games.game1.getAmountAndRangeBasedOn
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.testforbachelor.ui.game_2.Game2ViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Game2Screen(navController: NavController) {
     val viewModel : Game2ViewModel = viewModel()
@@ -78,6 +82,22 @@ fun Game2Screen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            TopAppBar(
+                title = { Text(text = "") },
+                actions = {
+                    Button(
+                        onClick = { navController.navigate(Routes.game2ScreenInstructions) },
+                        modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
+                    ) {
+                        Text(
+                            text = "Hjelp",
+                            fontSize = 20.sp, // Increased font size
+                            color = Color.Black // Set the text color
+                        )
+                    }
+                }
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = timerText,
