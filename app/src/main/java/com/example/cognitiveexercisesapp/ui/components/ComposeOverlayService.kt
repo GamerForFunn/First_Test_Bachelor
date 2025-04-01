@@ -18,7 +18,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -136,59 +138,83 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             setContent {
                 Box(
                     modifier = Modifier
-                        .height(663.dp)
-                        .width(396.dp),
+                        .height(400.dp)
+                        .width(320.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    Box(
+                        modifier = Modifier
+                            .width(322.dp)
+                            .background(Color.White, shape = RoundedCornerShape(16.dp))
+                            .padding(16.dp)
                     ) {
-                        // Rounded-corner box containing the text.
-                        Box(
-                            modifier = Modifier
-                                .width(272.dp)
-                                .height(300.dp)
-                                .background(Color.White, shape = RoundedCornerShape(16.dp))
-                                .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
-                                .padding(16.dp), // Adjust padding as needed.
-                            contentAlignment = Alignment.Center
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            Text(
-                                text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
-                                fontSize = 18.sp,
-                                color = Color(0xFF6B6B6B),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(horizontal = 8.dp)
-                            )
-                        }
-                        // Button placed below the rounded-corner box.
-                        Button(
-                            onClick = {
-                                // Launch MainActivity.
-                                val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(intent)
-                                // Remove the overlay entirely so it no longer intercepts touches.
-                                hideOverlay()
-                                stopSelf()
-                            },
-                            modifier = Modifier
-                                .width(272.dp)
-                                .height(52.dp)
-                        ) {
-                            Text(
-                                text = "Start",
-                                fontSize = 18.sp,
-                                color = Color(0xFFFFFFFF)
-                            )
-                            Image(
-                                painter = painterResource(id = R.drawable.arrow),
-                                contentDescription = "Arrow Icon",
+                            Box(
                                 modifier = Modifier
-                                    .size(24.dp)
-                                    .padding(start = 4.dp)
-                            )
+                                    .fillMaxWidth()
+                                    .height(300.dp)
+                                    .background(Color.White, shape = RoundedCornerShape(16.dp))
+                                    .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                                    fontSize = 24.sp,
+                                    lineHeight = 36.sp,
+                                    color = Color(0xFF6B6B6B),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.padding(horizontal = 8.dp)
+                                )
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Button(
+                                    onClick = {
+                                        hideOverlay()
+                                        stopSelf()
+                                    },
+                                    modifier = Modifier
+                                        .weight(1.05f)
+                                        .height(52.dp)
+                                ) {
+                                    Text(
+                                        text = "Avbryt",
+                                        fontSize = 30.sp,
+                                        color = Color.White
+                                    )
+                                }
+                                Button(
+                                    onClick = {
+                                        val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        startActivity(intent)
+                                        hideOverlay()
+                                        stopSelf()
+                                    },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(52.dp)
+                                ) {
+                                    Text(
+                                        text = "Start",
+                                        fontSize = 30.sp,
+                                        color = Color.White
+                                    )
+                                    Image(
+                                        painter = painterResource(id = R.drawable.arrow),
+                                        contentDescription = "Arrow Icon",
+                                        modifier = Modifier
+                                            .size(24.dp)
+                                            .padding(start = 4.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -215,7 +241,6 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             else
                 WindowManager.LayoutParams.TYPE_PHONE,
-            // The overlay will now be touchable.
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
@@ -244,72 +269,93 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
     @Preview(showBackground = true)
     @Composable
     fun OverlayPopupPreview() {
-        // Wrap with your app theme to reflect your styling.
         CognitiveExercisesAppTheme {
             Box(
                 modifier = Modifier
-                    .height(663.dp)
-                    .width(396.dp),
+                    .height(400.dp)
+                    .width(320.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                Box(
+                    modifier = Modifier
+                        .width(322.dp)
+                        .background(Color.White, shape = RoundedCornerShape(16.dp))
+                        .padding(16.dp)
                 ) {
-                    // Rounded-corner box containing the text.
-                    Box(
-                        modifier = Modifier
-                            .width(272.dp)
-                            .height(300.dp)
-                            .background(Color.White, shape = RoundedCornerShape(16.dp))
-                            .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
-                            .padding(16.dp), // Adjust padding as needed.
-                        contentAlignment = Alignment.Center
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Text(
-                            text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
-                            fontSize = 18.sp,
-                            color = Color(0xFF6B6B6B),
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
-                    // Button placed below the rounded-corner box.
-                    Button(
-                        onClick = {
-                            // Launch MainActivity.
-                            val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            // Remove the overlay entirely so it no longer intercepts touches.
-                            hideOverlay()
-                            stopSelf()
-                        },
-                        modifier = Modifier
-                            .width(272.dp)
-                            .height(52.dp)
-                    ) {
-                        Text(
-                            text = "Start",
-                            fontSize = 18.sp,
-                            color = Color(0xFFFFFFFF)
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.arrow),
-                            contentDescription = "Arrow Icon",
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .padding(start = 4.dp)
-                        )
+                                .fillMaxWidth()
+                                .height(300.dp)
+                                .background(Color.White, shape = RoundedCornerShape(16.dp))
+                                .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                                fontSize = 24.sp,
+                                lineHeight = 36.sp,
+                                color = Color(0xFF6B6B6B),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Button(
+                                onClick = {
+                                    hideOverlay()
+                                    stopSelf()
+                                },
+                                modifier = Modifier
+                                    .weight(1.05f)
+                                    .height(52.dp)
+                            ) {
+                                Text(
+                                    text = "Avbryt",
+                                    fontSize = 30.sp,
+                                    color = Color.White
+                                )
+                            }
+                            Button(
+                                onClick = {
+                                    val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(intent)
+                                    hideOverlay()
+                                    stopSelf()
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(52.dp)
+                            ) {
+                                Text(
+                                    text = "Start",
+                                    fontSize = 30.sp,
+                                    color = Color.White
+                                )
+                                Image(
+                                    painter = painterResource(id = R.drawable.arrow),
+                                    contentDescription = "Arrow Icon",
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .padding(start = 4.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
 
+
         }
     }
-
-
-
 }
 
 
