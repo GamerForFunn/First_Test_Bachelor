@@ -11,7 +11,7 @@ object GameInstructions {
     var difficulty by mutableStateOf(1f) // Default value
 
 
-    var currentLanguage = "EN" // Default language
+    var currentLanguage = "NO" // Default language
 
 /* TODO im using the \n tag becaus its the only way i could figur out how to verticly center text :( */
     fun getWronAnswerGame1(): String {
@@ -32,7 +32,7 @@ object GameInstructions {
 
     fun getGame1Instructions(): String {
         return if (currentLanguage == "NO") {
-            "Trykk på flisene i rekkefølge fra laveste til høyeste"
+            "Trykk på tallene i rekkefølge fra laveste til høyeste"
         } else {
             "Tap the tiles in order from lowest to highest"
         }
