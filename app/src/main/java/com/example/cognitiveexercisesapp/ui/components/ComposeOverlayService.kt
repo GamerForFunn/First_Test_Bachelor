@@ -12,20 +12,35 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.view.WindowManager
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.navigation.compose.rememberNavController
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
@@ -33,6 +48,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.example.cognitiveexercisesapp.MainActivity
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.theme.AppTheme
+import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 
 class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner {
 
@@ -118,22 +134,57 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             setViewTreeSavedStateRegistryOwner(this@ComposeOverlayService)
             setContent {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier,
                     contentAlignment = Alignment.Center
                 ) {
-                    Button(
-                        onClick = {
-                            // Launch MainActivity.
-                            val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            // Remove the overlay entirely so it no longer intercepts touches.
-                            hideOverlay()
-                            stopSelf()
-                        },
-                        modifier = Modifier.padding(8.dp)
+                    // Popup container with fixed dimensions (adjust as needed)
+                    Box(
+                        modifier = Modifier
+                            .width(300.dp)
+                            .height(200.dp)
+                            .background(Color.DarkGray, shape = RoundedCornerShape(15.dp)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Open app", fontSize = AppTheme.buttonTextSize)
+                        // Arrange the text and button in a vertical column.
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            Text(
+                                text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                                fontSize = 18.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                            Button(
+                                onClick = {
+                                    // Launch MainActivity.
+                                    val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(intent)
+                                    // Remove the overlay entirely so it no longer intercepts touches.
+                                    hideOverlay()
+                                    stopSelf() },
+                                modifier = Modifier
+                                    .width(272.dp)
+                                    .height(52.dp)
+                            ) {
+                                Text(
+                                    text = "Start",
+                                    fontSize = 18.sp,
+                                    color = Color.White
+                                )
+                                // Display the arrow image. Ensure R.drawable.arrow is available.
+                                Image(
+                                    painter = painterResource(id = R.drawable.arrow),
+                                    contentDescription = "Arrow Icon",
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .padding(start = 4.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -185,4 +236,66 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             context.startService(intent)
         }
     }
+    @Preview(showBackground = true)
+    @Composable
+    fun OverlayPopupPreview() {
+        // Wrap with your app theme to reflect your styling.
+        CognitiveExercisesAppTheme {
+            // A full-screen box with a semi-transparent background to mimic an overlay.
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                // Popup container with fixed dimensions (adjust as needed)
+                Box(
+                    modifier = Modifier
+                        .width(300.dp)
+                        .height(200.dp)
+                        .background(Color.DarkGray, shape = RoundedCornerShape(15.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // Arrange the text and button in a vertical column.
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Text(
+                            text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                            fontSize = 18.sp,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                        Button(
+                            onClick = { /* No action for preview */ },
+                            modifier = Modifier
+                                .width(272.dp)
+                                .height(52.dp)
+                        ) {
+                            Text(
+                                text = "Start",
+                                fontSize = 18.sp,
+                                color = Color.White
+                            )
+                            // Display the arrow image. Ensure R.drawable.arrow is available.
+                            Image(
+                                painter = painterResource(id = R.drawable.arrow),
+                                contentDescription = "Arrow Icon",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .padding(start = 4.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }
+
+
