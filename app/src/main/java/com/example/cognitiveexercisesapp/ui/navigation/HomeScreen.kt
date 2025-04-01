@@ -26,13 +26,13 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // **Difficulty Slider**
+        // Difficulty Slider
         Text(text = "Select Difficulty: ${difficulty.toInt()}", fontSize = AppTheme.h2)
         Slider(
             value = difficulty,
             onValueChange = { newValue ->
                 difficulty = newValue
-                GameInstructions.difficulty = newValue // ✅ Save globally
+                GameInstructions.difficulty = newValue
             },
             valueRange = 1f..100f,
             steps = 99, // 1 - 100
@@ -41,38 +41,44 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+
         // **Language Selection**
-        Text(text = "Select Language:", fontSize = AppTheme.h2)
+        if (false) {
+            Text(text = "Select Language:", fontSize = AppTheme.h2)
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            RadioButton(
-                selected = currentLanguage == "EN",
-                onClick = {
-                    GameInstructions.currentLanguage = "EN"
-                    currentLanguage = "EN"
-                }
-            )
-            Text(text = "English", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                RadioButton(
+                    selected = currentLanguage == "EN",
+                    onClick = {
+                        GameInstructions.currentLanguage = "EN"
+                        currentLanguage = "EN"
+                    }
+                )
+                Text(text = "English", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                RadioButton(
+                    selected = currentLanguage == "NO",
+                    onClick = {
+                        GameInstructions.currentLanguage = "NO"
+                        currentLanguage = "NO"
+                    }
+                )
+                Text(text = "Norsk", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+        } else {
+            Spacer(modifier = Modifier.height(80.dp))
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            RadioButton(
-                selected = currentLanguage == "NO",
-                onClick = {
-                    GameInstructions.currentLanguage = "NO"
-                    currentLanguage = "NO"
-                }
-            )
-            Text(text = "Norsk", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = { navController.navigate(Routes.game1ScreenInstructions) }, modifier = Modifier.padding(8.dp)) {
             Text(text = "Game 1", fontSize = AppTheme.buttonTextSize)
