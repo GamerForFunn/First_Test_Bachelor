@@ -14,6 +14,7 @@ import android.os.Looper
 import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -134,56 +135,60 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             setViewTreeSavedStateRegistryOwner(this@ComposeOverlayService)
             setContent {
                 Box(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .height(663.dp)
+                        .width(396.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Popup container with fixed dimensions (adjust as needed)
-                    Box(
-                        modifier = Modifier
-                            .width(300.dp)
-                            .height(200.dp)
-                            .background(Color.DarkGray, shape = RoundedCornerShape(15.dp)),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        // Arrange the text and button in a vertical column.
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        // Rounded-corner box containing the text.
+                        Box(
+                            modifier = Modifier
+                                .width(272.dp)
+                                .height(300.dp)
+                                .background(Color.White, shape = RoundedCornerShape(16.dp))
+                                .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
+                                .padding(16.dp), // Adjust padding as needed.
+                            contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
                                 fontSize = 18.sp,
-                                color = Color.White,
+                                color = Color(0xFF6B6B6B),
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             )
-                            Button(
-                                onClick = {
-                                    // Launch MainActivity.
-                                    val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    startActivity(intent)
-                                    // Remove the overlay entirely so it no longer intercepts touches.
-                                    hideOverlay()
-                                    stopSelf() },
+                        }
+                        // Button placed below the rounded-corner box.
+                        Button(
+                            onClick = {
+                                // Launch MainActivity.
+                                val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                                // Remove the overlay entirely so it no longer intercepts touches.
+                                hideOverlay()
+                                stopSelf()
+                            },
+                            modifier = Modifier
+                                .width(272.dp)
+                                .height(52.dp)
+                        ) {
+                            Text(
+                                text = "Start",
+                                fontSize = 18.sp,
+                                color = Color(0xFFFFFFFF)
+                            )
+                            Image(
+                                painter = painterResource(id = R.drawable.arrow),
+                                contentDescription = "Arrow Icon",
                                 modifier = Modifier
-                                    .width(272.dp)
-                                    .height(52.dp)
-                            ) {
-                                Text(
-                                    text = "Start",
-                                    fontSize = 18.sp,
-                                    color = Color.White
-                                )
-                                // Display the arrow image. Ensure R.drawable.arrow is available.
-                                Image(
-                                    painter = painterResource(id = R.drawable.arrow),
-                                    contentDescription = "Arrow Icon",
-                                    modifier = Modifier
-                                        .size(24.dp)
-                                        .padding(start = 4.dp)
-                                )
-                            }
+                                    .size(24.dp)
+                                    .padding(start = 4.dp)
+                            )
                         }
                     }
                 }
@@ -241,56 +246,65 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
     fun OverlayPopupPreview() {
         // Wrap with your app theme to reflect your styling.
         CognitiveExercisesAppTheme {
-            // A full-screen box with a semi-transparent background to mimic an overlay.
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f)),
+                    .height(663.dp)
+                    .width(396.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // Popup container with fixed dimensions (adjust as needed)
-                Box(
-                    modifier = Modifier
-                        .width(300.dp)
-                        .height(200.dp)
-                        .background(Color.DarkGray, shape = RoundedCornerShape(15.dp)),
-                    contentAlignment = Alignment.Center
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Arrange the text and button in a vertical column.
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    // Rounded-corner box containing the text.
+                    Box(
+                        modifier = Modifier
+                            .width(272.dp)
+                            .height(300.dp)
+                            .background(Color.White, shape = RoundedCornerShape(16.dp))
+                            .border(2.dp, Color.Blue, shape = RoundedCornerShape(16.dp))
+                            .padding(16.dp), // Adjust padding as needed.
+                        contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
                             fontSize = 18.sp,
-                            color = Color.White,
+                            color = Color(0xFF6B6B6B),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
-                        Button(
-                            onClick = { /* No action for preview */ },
+                    }
+                    // Button placed below the rounded-corner box.
+                    Button(
+                        onClick = {
+                            // Launch MainActivity.
+                            val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            // Remove the overlay entirely so it no longer intercepts touches.
+                            hideOverlay()
+                            stopSelf()
+                        },
+                        modifier = Modifier
+                            .width(272.dp)
+                            .height(52.dp)
+                    ) {
+                        Text(
+                            text = "Start",
+                            fontSize = 18.sp,
+                            color = Color(0xFFFFFFFF)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow),
+                            contentDescription = "Arrow Icon",
                             modifier = Modifier
-                                .width(272.dp)
-                                .height(52.dp)
-                        ) {
-                            Text(
-                                text = "Start",
-                                fontSize = 18.sp,
-                                color = Color.White
-                            )
-                            // Display the arrow image. Ensure R.drawable.arrow is available.
-                            Image(
-                                painter = painterResource(id = R.drawable.arrow),
-                                contentDescription = "Arrow Icon",
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .padding(start = 4.dp)
-                            )
-                        }
+                                .size(24.dp)
+                                .padding(start = 4.dp)
+                        )
                     }
                 }
             }
+
         }
     }
 
