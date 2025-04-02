@@ -60,7 +60,7 @@ fun ComparisonChartScreen(navController: NavController) {
             )
             ContinueButton(
                 onClick = {
-                    navController.navigate(Routes.doctorsComment)
+                    navController.navigate(Routes.homeScreen)
                           },
                 modifier = Modifier.padding(innerPadding)
             )
