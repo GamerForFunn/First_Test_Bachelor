@@ -156,7 +156,7 @@ fun FinishedExercise(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = "Exercise finished",
+            text = "Spill fullført",
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 30.sp,
@@ -181,7 +181,7 @@ fun ShowTimeCounter(imageVisibility: Boolean, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Time: $seconds",
+            text = "Tid: $seconds",
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             color = Color(0xFF007AFF),
@@ -229,7 +229,7 @@ fun ShowWrongAnswers(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Wrong Answers: $wrongAnswers",
+            text = "Feil svar: $wrongAnswers",
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -319,7 +319,7 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Your score", // PH until score system is up n going
+            text = "Dine poeng", // PH until score system is up n going
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -388,7 +388,7 @@ fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier 
                 colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
             ) {
                 Text(
-                    "Continue",
+                    "Fortsett",
                     fontSize = 24.sp,
                     modifier = Modifier,
                     color = Color.White

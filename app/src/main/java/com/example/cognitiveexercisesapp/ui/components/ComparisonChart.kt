@@ -94,7 +94,7 @@ fun ScreenTitle() {
             .background(Color(0xFF40376E), shape = RoundedCornerShape(10.dp))
     ) {
         Text(
-            text = "Comparison chart",
+            text = "Poengdiagram",
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             modifier = Modifier
@@ -119,7 +119,7 @@ fun ScoreDisplay(userScore: Int, averageScore: Int, modifier: Modifier = Modifie
                 .padding(bottom = 380.dp)
         ) {
             Text(
-                text = "Your score",
+                text = "Dine poeng",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -164,7 +164,7 @@ Box(
             modifier = modifier
         ) {
             Text(
-                text = "Average score",
+                text = "Snittpoeng",
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -217,8 +217,8 @@ Box(
                             .height(40.dp)
                     )
                     Text(
-                        text = "Other players achieved an average of " +
-                                "$averageScore points this exercise",
+                        text = "Andre spillere fikk i gjennomsnitt " +
+                                "$averageScore poeng",
                         style = whiteTextStyle.copy(fontSize = 18.sp),
                         modifier = Modifier
                             .padding(top = 160.dp)
@@ -245,7 +245,7 @@ fun ContinueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
         ) {
             Text(
-                "Continue",
+                "Fortsett",
                 fontSize = 24.sp,
                 modifier = Modifier,
                 color = Color.White

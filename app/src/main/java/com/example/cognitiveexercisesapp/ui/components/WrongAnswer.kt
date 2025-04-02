@@ -120,11 +120,11 @@ fun ExitButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBECCFF)),
         modifier = modifier
-            .width(100.dp)
+            .width(150.dp)
             .height(50.dp)
     ) {
         Text(
-            text = "Exit",
+            text = "Avbryt",
             fontSize = 30.sp,
             color = Color(0xFF007AFF)
         )
@@ -137,11 +137,11 @@ fun RetryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007AFF)),
         modifier = modifier
-            .width(250.dp)
+            .width(200.dp)
             .height(50.dp)
     ) {
         Text(
-            text = "Retry",
+            text = "Prøv igjen",
             fontSize = 30.sp,
             color = Color.White
         )
@@ -151,7 +151,7 @@ fun RetryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 fun NoteText(modifier: Modifier = Modifier) {
     Text(
-        text = "Note: If you quit the game before completing it, you will not receive any rewards.",
+        text = "Notat: Hvis du avslutter spillet før det er ferdig, får du ingen poeng.",
         fontSize = 20.sp,
         lineHeight = 24.sp,
         color = Color(0xFF6B6B6B),
@@ -171,7 +171,7 @@ fun AreYouSure(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "You can try this level again, or exit the exercise.\nWhat would you like to do?",
+            text = "Du kan prøve dette spillet igjen, eller avslutte.\nHva vil du gjøre?",
             fontSize = 24.sp,
             lineHeight = 36.sp,
             color = Color(0xFF6B6B6B)
@@ -193,7 +193,7 @@ fun EmbarrassedImage(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Oops!\nYou selected the wrong answer.",
+            text = "Oops!\nDu valgte feil svar.",
             fontSize = 32.sp,
             lineHeight = 40.sp,
             color = Color.Black,

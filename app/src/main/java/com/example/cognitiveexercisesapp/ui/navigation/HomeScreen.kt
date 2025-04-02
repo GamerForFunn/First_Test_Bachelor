@@ -103,13 +103,13 @@ fun HomeScreen(navController: NavController) {
 
 
         Button(onClick = { navController.navigate(Routes.game1ScreenInstructions) }, modifier = Modifier.padding(8.dp)) {
-            Text(text = "Game 1", fontSize = AppTheme.buttonTextSize)
+            Text(text = "Spill 1", fontSize = AppTheme.buttonTextSize)
         }
         Button(onClick = { navController.navigate(Routes.game2ScreenInstructions) }, modifier = Modifier.padding(8.dp)) {
-            Text(text = "Game 2", fontSize = AppTheme.buttonTextSize)
+            Text(text = "Spill 2", fontSize = AppTheme.buttonTextSize)
         }
         Button(onClick = { navController.navigate(Routes.game3ScreenInstructions) }, modifier = Modifier.padding(8.dp)) {
-            Text(text = "Game 3", fontSize = AppTheme.buttonTextSize)
+            Text(text = "Spill 3", fontSize = AppTheme.buttonTextSize)
         }
         val context = LocalContext.current.applicationContext
         if (!popUpActive) {
