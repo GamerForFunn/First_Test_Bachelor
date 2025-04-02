@@ -85,7 +85,7 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             startForegroundServiceIfNeeded()
             Handler(Looper.getMainLooper()).postDelayed({
                 showOverlay()
-            }, 5000)
+            }, 15000)
         }
         if (intent.hasExtra(INTENT_EXTRA_COMMAND_HIDE_OVERLAY)) {
             hideOverlay()
