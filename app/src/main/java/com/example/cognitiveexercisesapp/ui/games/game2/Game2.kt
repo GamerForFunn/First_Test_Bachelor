@@ -83,13 +83,13 @@ fun Game2Screen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopAppBar(title = { Text(text = "") },
+            TopAppBar(title = { Text(text = "") }, //Topbar for the "Hjelp" button
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
+                    containerColor = Color.Transparent //Without this the top bar will be pure black if opened in dark mode
                 ),
                 actions = {
                     Button(
-                        onClick = { navController.navigate(Routes.game2ScreenInstructions) },
+                        onClick = { navController.navigate(Routes.game2ScreenInstructions) }, //This will restart the game, We could make something to avoid this but this is an MVP
                         modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
                     ) {
@@ -108,7 +108,7 @@ fun Game2Screen(navController: NavController) {
                 modifier = Modifier.padding(8.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
+            Text( //We had language selection for test one but for our testers Norwegian was more important
                 text = when (GameInstructions.currentLanguage){ //Switches languages
                     "EN" -> "Please select the correct image!"
                     "NO" -> "Venligst velg det riktige bildet"
