@@ -48,6 +48,8 @@ fun ExerciseFinished(navController: NavController) {
     var showUserScore by remember { mutableStateOf(false) }
     var showButton by remember { mutableStateOf(false) }
 
+    showScoreExerciseScreen = true
+
     // Supposed to count the number of confetti images that are displayed. When all are shown,
     // it will hide them again and show the sparkling images instead.
     var imageCounter = 0

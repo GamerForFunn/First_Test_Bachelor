@@ -47,6 +47,8 @@ import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 fun ComparisonChartScreen(navController: NavController) {
     var showContent by remember { mutableStateOf(true) }
     showScoreExerciseScreen = false // MUST BE HERE OR BUG WILL OCCUR.
+    countWrongAnswers = 0 // Reset the wrong answers counter.
+    timeSpentSeconds = 0 // Reset the time spent counter.
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         if (showContent) {
             BackgroundThemeComparisonChart(
