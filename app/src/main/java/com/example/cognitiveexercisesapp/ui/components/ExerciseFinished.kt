@@ -30,17 +30,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 import kotlinx.coroutines.delay
+import java.util.Objects
 
 // This actually displays the score, time, wrong answers etc.
 @Composable
 fun ExerciseFinished(navController: NavController) {
 
     // Vars for showing the different parts of the screen after a given delay.
-    // All of these are supposed to be false EXCEPT for showContent.
     var showTimeCounter by remember { mutableStateOf(false) }
     var showWrongAnswers by remember { mutableStateOf(false) }
     var showLevelDifficulty by remember { mutableStateOf(false) }
@@ -86,7 +88,7 @@ fun ExerciseFinished(navController: NavController) {
                 modifier = Modifier.padding(innerPadding)
             )
             if (showTimeCounter) {
-                ShowTimeCounter(true, modifier = Modifier.padding(innerPadding))
+                ShowTimeCounter(true, timeSpentSeconds, modifier = Modifier.padding(innerPadding))
             }
             // countWrongAnswers is temp until the system is up n running. Should take the
             // amount of wrong answers from the exercise.
@@ -101,8 +103,7 @@ fun ExerciseFinished(navController: NavController) {
             // Should take the difficulty from the exercise as well as a given difficulty bonus.
             if (showLevelDifficulty) {
                 ShowLevelDifficulty(
-                    typeDifficulty,
-                    difficultyPoints,
+                    GameInstructions.difficulty.toInt(),
                     true,
                     modifier = Modifier.padding(innerPadding)
                 )
@@ -110,11 +111,13 @@ fun ExerciseFinished(navController: NavController) {
             if (showTotalScore) {
                 ShowTotalScore(true, modifier = Modifier.padding(innerPadding))
             }
+
             // This is just a ph for calculating the user score.
             if (showUserScore) {
                 CalculateUserScore(
-                    difficultyPoints,
+                    GameInstructions.difficulty.toInt(),
                     timeSpentSeconds,
+                    countWrongAnswers,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
@@ -168,20 +171,18 @@ fun FinishedExercise(modifier: Modifier = Modifier) {
     }
 }
 
-// Temp val for testing.
-private val timeSpentSeconds = 221
+var timeSpentSeconds = 0
 
 // Shows the counter (time used) in the app.
 @Composable
-fun ShowTimeCounter(imageVisibility: Boolean, modifier: Modifier = Modifier) {
+fun ShowTimeCounter(imageVisibility: Boolean, timeSpent: Int, modifier: Modifier = Modifier) {
     val imageIsVisible by remember { mutableStateOf(imageVisibility) }
-    val seconds = timeSpentSeconds
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Tid: $seconds",
+            text = "Tid: $timeSpent sekunder",
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             color = Color(0xFF007AFF),
@@ -213,8 +214,19 @@ fun ShowTimeCounter(imageVisibility: Boolean, modifier: Modifier = Modifier) {
     }
 }
 
-// Only for testing. Delete afterwards.
-private val countWrongAnswers = 3
+@Composable
+fun CountTime() {
+    // Counts the time spent in the game.
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000L) // Wait for 1 second
+            timeSpentSeconds++
+        }
+    }
+}
+
+// Counts the number of wrong answers the user got.
+var countWrongAnswers = 0
 
 // Displays the amount of wrong answers the user got.
 @Composable
@@ -260,25 +272,21 @@ fun ShowWrongAnswers(
     }
 }
 
-// Both of these are temp for testing.
-private val typeDifficulty = "Normal"
-private val difficultyPoints = 200
-
 // Displays the difficulty level of the level. Gives points based on difficulty.
 @Composable
 fun ShowLevelDifficulty(
-    levelDifficulty: String,
     difficultyBonusPoints: Int,
     imageVisibility: Boolean,
     modifier: Modifier = Modifier
 ) {
     val imageIsVisible by remember { mutableStateOf(imageVisibility) }
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Level $levelDifficulty: $difficultyBonusPoints",
+            text = "Vanskelighetsgrad: $difficultyBonusPoints",
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -319,7 +327,7 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Dine poeng", // PH until score system is up n going
+            text = "Dine poeng",
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -350,10 +358,16 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
     }
 }
 
-// This calculates the user score based on difficulty and time spent. Just a placeholder for now.
+// This calculates the user score based on difficulty and time spent.
 @Composable
-fun CalculateUserScore(difficultyBonusPoints: Int, timeSpent: Int, modifier: Modifier = Modifier) {
-    val userScore = difficultyBonusPoints - (timeSpent / 2)
+fun CalculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modifier: Modifier = Modifier): Int {
+    // Function for calculating score based on difficulty level and time used. It scales on a
+    // 1 to 100 scale with exponential growth. It also grants extra bonus points for higher difficulty.
+    var userScore = 1000 + (difficulty * 3) - (timeSpent * 10) - (wrongAnswers * 25)
+    // Just sets userscore to 0 so it doesn't give a negative score.
+    if (userScore < 0) {
+        userScore = 0
+    }
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -368,6 +382,7 @@ fun CalculateUserScore(difficultyBonusPoints: Int, timeSpent: Int, modifier: Mod
                 .width(250.dp)
         )
     }
+    return userScore
 }
 
 // Continue button that takes you to the next screen.
@@ -404,9 +419,6 @@ fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier 
         }
     }
 }
-
-
-
 
 @Preview(showBackground = true)
 @Composable

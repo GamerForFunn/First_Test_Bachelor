@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.components.CountTime
+import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Config
 import com.example.cognitiveexercisesapp.ui.games.game1.getAmountAndRangeBasedOnDifficulty
@@ -61,6 +63,9 @@ fun Game2Screen(navController: NavController) {
 
     // Track the current round
     var currentRound by remember { mutableStateOf(1) }
+
+    // Counts the time spent in the game.
+    CountTime()
 
     // Handle round progression
     fun roundChecker() {
@@ -141,7 +146,9 @@ fun Game2Screen(navController: NavController) {
                     modifier = Modifier
                         .size(120.dp)
                         .clickable { if(randomImage1 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
-                                   else{navController.navigate(Routes.wrongAnswer+"/Game2")}}, //If wrong will send to wrong screen and they have to start again
+                                   else {navController.navigate(Routes.wrongAnswer+"/Game2")
+                                    countWrongAnswers += 1 // Increases wrong answer count.
+                        }}, //If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
                 Image(
@@ -150,7 +157,9 @@ fun Game2Screen(navController: NavController) {
                     modifier = Modifier
                         .size(120.dp)
                         .clickable { if(randomImage2 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
-                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}}, //If wrong will send to wrong screen and they have to start again
+                        else{navController.navigate(Routes.wrongAnswer+"/Game2")
+                            countWrongAnswers += 1 // Increases wrong answer count.
+                        }}, //If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
                 Image(
@@ -159,7 +168,9 @@ fun Game2Screen(navController: NavController) {
                     modifier = Modifier
                         .size(120.dp)
                         .clickable { if(randomImage3 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
-                        else{navController.navigate(Routes.wrongAnswer+"/Game2")}},//If wrong will send to wrong screen and they have to start again
+                        else{navController.navigate(Routes.wrongAnswer+"/Game2")
+                            countWrongAnswers += 1 // Increases wrong answer count.
+                        }},//If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
             }

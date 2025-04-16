@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
@@ -54,8 +55,12 @@ fun ComparisonChartScreen(navController: NavController) {
             ScreenTitle()
             ScoreDisplay(
                 // The user score here should be calculated from the exercise. This value is just ph.
-                userScore = 436,
-                averageScore = 500,
+                CalculateUserScore(
+                    GameInstructions.difficulty.toInt(),
+                    timeSpentSeconds,
+                    countWrongAnswers,
+                    ),
+                averageScore = 2000,
                 modifier = Modifier.padding(innerPadding)
             )
             ContinueButton(
@@ -154,7 +159,7 @@ Box(
             modifier = Modifier
                 .background(Color(0xFFB23259), shape = RoundedCornerShape(10.dp))
                 .animateContentSize(animationSpec = tween(durationMillis = 2000))
-                .width(if (expanded)(userScore / 500f * 260).dp else (0).dp)
+                .width(if (expanded)(userScore / 2000f * 260).dp else (0).dp)
                 .fillMaxHeight()
         )
     }
@@ -193,7 +198,7 @@ Box(
                     modifier = Modifier
                         .background(Color(0xFFB23259), shape = RoundedCornerShape(10.dp))
                         .animateContentSize(animationSpec = tween(durationMillis = 2000))
-                        .width(if (expanded)(averageScore / 500f * 260).dp else (0).dp)
+                        .width(if (expanded)(averageScore / 2000f * 260).dp else (0).dp)
                         .fillMaxHeight()
                 )
             }

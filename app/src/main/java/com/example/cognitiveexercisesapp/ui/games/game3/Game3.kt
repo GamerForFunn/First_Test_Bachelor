@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.components.CountTime
 import com.example.cognitiveexercisesapp.ui.components.WordPairingWordButton
+import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import kotlinx.coroutines.delay
 
@@ -34,6 +36,9 @@ import kotlinx.coroutines.delay
 fun Game3Screen (navController: NavController) {
     val viewModel: WordPairingViewModel = viewModel()
     val gameState by viewModel.gameState.observeAsState()
+
+    // Counts the time spent in the game.
+    CountTime()
 
     // Reset selection after validation
     LaunchedEffect(gameState?.isCorrectPair) {
@@ -97,7 +102,10 @@ fun Game3Screen (navController: NavController) {
                     index = 0,
                     isSelected = gameState!!.selectedIndices.contains(0),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
+                    onWordSelected = {
+                                     word, index -> viewModel.onWordSelected(word, index, navController)
+                                    countWrongAnswers += 1 // Counts wrong answers.
+                                    }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .offset(x = 20.dp, y = 40.dp)
@@ -108,7 +116,10 @@ fun Game3Screen (navController: NavController) {
                     index = 1,
                     isSelected = gameState!!.selectedIndices.contains(1),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
+                    onWordSelected = {
+                                     word, index -> viewModel.onWordSelected(word, index, navController)
+                                    countWrongAnswers += 1 // Counts wrong answers.
+                                    }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .offset(x = (-20).dp)
@@ -119,7 +130,10 @@ fun Game3Screen (navController: NavController) {
                     index = 2,
                     isSelected = gameState!!.selectedIndices.contains(2),
                     isCorrectPair = gameState!!.isCorrectPair,
-                    onWordSelected = { word, index -> viewModel.onWordSelected(word, index, navController) }, // Pass navController
+                    onWordSelected = {
+                                     word, index -> viewModel.onWordSelected(word, index, navController)
+                                     countWrongAnswers += 1 // Counts wrong answers.
+                                     }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .offset(x = 20.dp)

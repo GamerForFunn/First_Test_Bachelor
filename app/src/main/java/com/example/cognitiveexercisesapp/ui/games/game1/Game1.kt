@@ -25,8 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.cognitiveexercisesapp.ui.games.GameScore
+import com.example.cognitiveexercisesapp.ui.components.CountTime
+import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
+import com.example.cognitiveexercisesapp.ui.components.timeSpentSeconds
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,6 +60,9 @@ fun Game1Screen(navController: NavController) {
             }
         }
     }
+
+    // Counts the time spent in the game.
+    CountTime()
 
     // Wrap everything in a Box to center content
     Box(
@@ -127,6 +133,7 @@ fun Game1Screen(navController: NavController) {
                                     onClick = {
                                         if (number != nextNumberToClick) {
                                             navController.navigate(Routes.wrongAnswer+"/Game1")
+                                            countWrongAnswers += 1 // Increases wrong answer count.
                                         } else {
                                             gridList = gridList.toMutableList().also { it[index] = null }
                                             nextNumberToClick = gridList.filterNotNull().minOrNull() ?: -1
