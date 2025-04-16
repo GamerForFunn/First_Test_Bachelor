@@ -40,13 +40,13 @@ import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
-import kotlin.math.round
 
 
 // Function that shows the screen.
 @Composable
 fun ComparisonChartScreen(navController: NavController) {
     var showContent by remember { mutableStateOf(true) }
+    showScoreExerciseScreen = false // MUST BE HERE OR BUG WILL OCCUR.
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         if (showContent) {
             BackgroundThemeComparisonChart(
@@ -55,7 +55,7 @@ fun ComparisonChartScreen(navController: NavController) {
             ScreenTitle()
             ScoreDisplay(
                 // The user score here should be calculated from the exercise. This value is just ph.
-                CalculateUserScore(
+                calculateUserScore(
                     GameInstructions.difficulty.toInt(),
                     timeSpentSeconds,
                     countWrongAnswers,

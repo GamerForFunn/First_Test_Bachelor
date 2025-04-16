@@ -31,12 +31,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
-import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 import kotlinx.coroutines.delay
-import java.util.Objects
 
 // This actually displays the score, time, wrong answers etc.
 @Composable
@@ -114,7 +112,7 @@ fun ExerciseFinished(navController: NavController) {
 
             // This is just a ph for calculating the user score.
             if (showUserScore) {
-                CalculateUserScore(
+                calculateUserScore(
                     GameInstructions.difficulty.toInt(),
                     timeSpentSeconds,
                     countWrongAnswers,
@@ -358,9 +356,11 @@ fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
     }
 }
 
+var showScoreExerciseScreen = true
+
 // This calculates the user score based on difficulty and time spent.
 @Composable
-fun CalculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modifier: Modifier = Modifier): Int {
+fun calculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modifier: Modifier = Modifier): Int {
     // Function for calculating score based on difficulty level and time used. It scales on a
     // 1 to 100 scale with exponential growth. It also grants extra bonus points for higher difficulty.
     var userScore = 1000 + (difficulty * 3) - (timeSpent * 10) - (wrongAnswers * 25)
@@ -368,12 +368,13 @@ fun CalculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modif
     if (userScore < 0) {
         userScore = 0
     }
+    if (showScoreExerciseScreen) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "$userScore", // PH until score system is up n going
+            text = "$userScore", // THIS IS THE CULPRIT.
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -381,6 +382,7 @@ fun CalculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modif
             modifier = Modifier
                 .width(250.dp)
         )
+        }
     }
     return userScore
 }
