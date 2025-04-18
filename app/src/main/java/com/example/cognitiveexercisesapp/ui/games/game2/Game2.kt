@@ -1,21 +1,29 @@
 package com.example.cognitiveexercisesapp.ui.games.game2
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,8 +37,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -85,39 +95,65 @@ fun Game2Screen(navController: NavController) {
             .background(backgroundColor)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(0.dp, 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopAppBar(title = { Text(text = "") }, //Topbar for the "Hjelp" button
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent //Without this the top bar will be pure black if opened in dark mode
-                ),
-                actions = {
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFFEDF4F4))
+                    .height(72.dp) // Explicit height for the TopAppBar
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Exit button
+                    IconButton(
+                        onClick = { navController.navigate(Routes.homeScreen) },
+                        modifier = Modifier.size(48.dp) // Fixed size for button
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Exit",
+                            tint = Color.Black
+                        )
+                    }
+
+                    // Timer in center
+                    Text(
+                        text = timerText,
+                        style = TextStyle(fontSize = 24.sp),
+                    )
+
+                    // Help button
                     Button(
-                        onClick = { navController.navigate(Routes.game2ScreenInstructions) }, //This will restart the game, We could make something to avoid this but this is an MVP
-                        modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
+                        onClick = { navController.navigate(Routes.game2ScreenInstructions) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                        modifier = Modifier.height(48.dp) // Fixed height for button
                     ) {
                         Text(
                             text = "Hjelp",
-                            fontSize = 20.sp, // Increased font size
-                            color = Color.Black // Set the text color
+                            fontSize = 20.sp,
+                            color = Color.Black
                         )
                     }
                 }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = timerText,
-                style = TextStyle(fontSize = 16.sp),
-                modifier = Modifier.padding(8.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
             Text( //We had language selection for test one but for our testers Norwegian was more important
                 text = when (GameInstructions.currentLanguage){ //Switches languages
                     "EN" -> "Please select the correct image!"
-                    "NO" -> "Venligst velg det riktige bildet"
-                    else -> "Venligst velg det riktige bildet"
+                    "NO" -> "Vennligst velg det riktige bildet"
+                    else -> "Vennligst velg det riktige bildet"
                 },
                 style = TextStyle(
                     fontSize = 20.sp,
@@ -126,14 +162,14 @@ fun Game2Screen(navController: NavController) {
                 ),
                 modifier = Modifier.padding(8.dp)
             )
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Image(
                 painter = painterResource(id = winnerImage),
                 contentDescription = "Correct Image",
-                modifier = Modifier.size(350.dp),
+                modifier = Modifier.size(250.dp),
                 contentScale = ContentScale.Fit
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(32.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,33 +180,39 @@ fun Game2Screen(navController: NavController) {
                     painter = painterResource(id = randomImage1),
                     contentDescription = "Left Image",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(110.dp)
                         .clickable { if(randomImage1 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
                                    else {navController.navigate(Routes.wrongAnswer+"/Game2")
                                     countWrongAnswers += 1 // Increases wrong answer count.
-                        }}, //If wrong will send to wrong screen and they have to start again
+                        }}//If wrong will send to wrong screen and they have to start again
+                        .border(BorderStroke(2.dp, Color.Black))
+                        .padding(10.dp),
                     contentScale = ContentScale.Fit
                 )
                 Image(
                     painter = painterResource(id = randomImage2),
                     contentDescription = "Middle Image",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(110.dp)
                         .clickable { if(randomImage2 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
                         else{navController.navigate(Routes.wrongAnswer+"/Game2")
                             countWrongAnswers += 1 // Increases wrong answer count.
-                        }}, //If wrong will send to wrong screen and they have to start again
+                        }}
+                        .border(BorderStroke(2.dp, Color.Black))
+                        .padding(10.dp), //If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
                 Image(
                     painter = painterResource(id = randomImage3),
                     contentDescription = "Right Image",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(110.dp)
                         .clickable { if(randomImage3 == winnerImage){roundChecker()} //Checking if imageID is the same as the winner image
                         else{navController.navigate(Routes.wrongAnswer+"/Game2")
                             countWrongAnswers += 1 // Increases wrong answer count.
-                        }},//If wrong will send to wrong screen and they have to start again
+                        }}
+                        .border(BorderStroke(2.dp, Color.Black))
+                        .padding(10.dp),//If wrong will send to wrong screen and they have to start again
                     contentScale = ContentScale.Fit
                 )
             }
