@@ -7,13 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.components.CountTime
+import com.example.cognitiveexercisesapp.ui.components.TopBar
 import com.example.cognitiveexercisesapp.ui.components.WordPairingWordButton
 import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
@@ -36,6 +33,7 @@ import kotlinx.coroutines.delay
 fun Game3Screen (navController: NavController) {
     val viewModel: WordPairingViewModel = viewModel()
     val gameState by viewModel.gameState.observeAsState()
+    val timerText = "⏰ ${gameState!!.timeLeft}s"
 
     // Counts the time spent in the game.
     CountTime()
@@ -49,39 +47,18 @@ fun Game3Screen (navController: NavController) {
     }
 
     if (gameState != null) {
-        TopAppBar(
-            title = { Text(text = "") },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Transparent
-            ),
-            actions = {
-                Button(
-                    onClick = { navController.navigate(Routes.game3ScreenInstructions) },
-                    modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
-                ) {
-                    Text(
-                        text = "Hjelp",
-                        fontSize = 20.sp, // Increased font size
-                        color = Color.Black // Set the text color
-                    )
-                }
-            }
-        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp),
+                .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "⏰ ${gameState!!.timeLeft}s",
-                style = MaterialTheme.typography.headlineSmall
-            )
+            TopBar(Routes.game3ScreenInstructions, navController, timerText)
+
             Text(
                 text = "Par sokkene!",
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 8.dp)
             )
 
             // Scattered sock layout
@@ -89,6 +66,7 @@ fun Game3Screen (navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .padding(24.dp)
             ) {
                 val words = listOf(
                     gameState!!.currentWordSet.word1,
@@ -108,7 +86,7 @@ fun Game3Screen (navController: NavController) {
                                     }, // Pass navController
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .offset(x = 20.dp, y = 40.dp)
+                        .offset(x = 20.dp)
                 )
 
                 WordPairingWordButton(

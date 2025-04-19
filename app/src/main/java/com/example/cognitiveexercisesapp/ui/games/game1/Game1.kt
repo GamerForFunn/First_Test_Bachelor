@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,8 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.components.CountTime
+import com.example.cognitiveexercisesapp.ui.components.TopBar
 import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +53,11 @@ fun Game1Screen(navController: NavController) {
 
     // Check if all numbers are null (round finished)
     val isRoundFinished = gridList.all { it == null }
+
+    // TODO fix timer logic for all games
+    val _timerTextGame1 = MutableStateFlow("00:00")
+    val timerTextGame1: StateFlow<String> = _timerTextGame1.asStateFlow()
+    val timerText by timerTextGame1.collectAsState()
 
     // Handle round progression
     LaunchedEffect(isRoundFinished) {
@@ -70,33 +80,16 @@ fun Game1Screen(navController: NavController) {
     // Wrap everything in a Box to center content
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 30.dp),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally // Center children horizontally
         ) {
-            TopAppBar(
-                title = { Text(text = "") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
-                ),
-                actions = {
-                    Button(
-                        onClick = { navController.navigate(Routes.game1ScreenInstructions) },
-                        modifier = Modifier.padding(horizontal = 16.dp), // Add horizontal padding
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make the button background transparent
-                    ) {
-                        Text(
-                            text = "Hjelp",
-                            fontSize = 20.sp, // Increased font size
-                            color = Color.Black // Set the text color
-                        )
-                    }
-                }
-            )
+            TopBar(Routes.game1ScreenInstructions, navController, timerText)
             // Display the current round
             if (Game1Config.rounds > 1){
                 Text(
@@ -107,11 +100,9 @@ fun Game1Screen(navController: NavController) {
                 )
             }
 
-
-            Spacer(modifier = Modifier.height(8.dp))
-
             // Display next number to click if enabled in Game1Config
             if (Game1Config.showNextClick) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Next to click: $nextNumberToClick",
                     fontSize = 16.sp,
