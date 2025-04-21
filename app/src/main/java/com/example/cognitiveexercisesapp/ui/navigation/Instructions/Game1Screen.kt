@@ -39,7 +39,7 @@ fun Game1ScreenInstructions(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OutlinedButton(
-                onClick = { navController.navigate(Routes.homeScreen) }
+                onClick = { navController.navigate(Routes.gamesTab) }
             ) {
                 Text(text = "Avbryt", fontSize = 30.sp)
             }

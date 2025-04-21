@@ -11,9 +11,32 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+
 import com.example.cognitiveexercisesapp.ui.components.ComparisonChartScreen
 import com.example.cognitiveexercisesapp.ui.components.DoctorsCommentShowScreen
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
@@ -21,6 +44,7 @@ import com.example.cognitiveexercisesapp.ui.components.WrongAnswerScreen
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Screen
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Screen
 import com.example.cognitiveexercisesapp.ui.games.game3.Game3Screen
+import com.example.cognitiveexercisesapp.ui.navigation.GameListScreen
 import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
@@ -73,47 +97,120 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CognitiveExercisesAppTheme {
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = Routes.homeScreen) {
-                    composable(Routes.homeScreen) {
-                        HomeScreen(navController)
-                    }
-                    composable(Routes.wrongAnswer + "/{currentGame}") {
-                        val currentGame = it.arguments?.getString("currentGame")
-                        WrongAnswerScreen(navController, currentGame ?: "No Game")
-                    }
-                    composable(Routes.comparisonChart) {
-                        ComparisonChartScreen(navController)
-                    }
-                    composable(Routes.exerciseFinished) {
-                        ExerciseFinished(navController)
-                    }
-                    composable(Routes.doctorsComment) {
-                        DoctorsCommentShowScreen(navController)
-                    }
-                    composable(Routes.game1ScreenInstructions) {
-                        Game1ScreenInstructions(navController)
-                    }
-                    composable(Routes.game1Screen) {
-                        Game1Screen(navController)
-                    }
-                    composable(Routes.game2ScreenInstructions) {
-                        Game2ScreenInstructions(navController)
-                    }
-                    composable(Routes.game2Screen) {
-                        Game2Screen(navController)
-                    }
-                    composable(Routes.game3ScreenInstructions) {
-                        Game3ScreenInstructions(navController)
-                    }
-                    composable(Routes.game3Screen) {
-                        Game3Screen(navController)
-                    }
-                    composable(Routes.homeScreen) {
-                        HomeScreen(navController)
-                    }
+                MainScreenWithBottomNav()
+            }
+        }
+    }
+}
+
+@Composable
+fun MainScreenWithBottomNav() {
+    val navController = rememberNavController()
+
+    Scaffold(
+        bottomBar = {
+            BottomNavBar(navController = navController)
+        }
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            NavHost(
+                navController = navController,
+                startDestination = Routes.homeTab // Create a new route for the home tab
+            ) {
+                // Tab level navigation
+                composable(Routes.homeTab) {
+                    HomeTab(navController)
+                }
+                composable(Routes.gamesTab) {
+                    GamesTab(navController)
+                }
+
+                // Existing screens (these will be navigated to from either tab)
+                composable(Routes.wrongAnswer + "/{currentGame}") {
+                    val currentGame = it.arguments?.getString("currentGame")
+                    WrongAnswerScreen(navController, currentGame ?: "No Game")
+                }
+                composable(Routes.comparisonChart) {
+                    ComparisonChartScreen(navController)
+                }
+                composable(Routes.exerciseFinished) {
+                    ExerciseFinished(navController)
+                }
+                composable(Routes.doctorsComment) {
+                    DoctorsCommentShowScreen(navController)
+                }
+                composable(Routes.game1ScreenInstructions) {
+                    Game1ScreenInstructions(navController)
+                }
+                composable(Routes.game1Screen) {
+                    Game1Screen(navController)
+                }
+                composable(Routes.game2ScreenInstructions) {
+                    Game2ScreenInstructions(navController)
+                }
+                composable(Routes.game2Screen) {
+                    Game2Screen(navController)
+                }
+                composable(Routes.game3ScreenInstructions) {
+                    Game3ScreenInstructions(navController)
+                }
+                composable(Routes.game3Screen) {
+                    Game3Screen(navController)
                 }
             }
         }
     }
+}
+
+@Composable
+fun BottomNavBar(navController: NavController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Only show the bottom nav when we're on one of the main tabs
+    val showBottomNav = currentRoute == Routes.homeTab || currentRoute == Routes.gamesTab
+
+    if (showBottomNav) {
+        NavigationBar {
+            NavigationBarItem(
+                icon = { Icon(Icons.Default.Home, contentDescription = "Hjem") },
+                label = { Text("Hjem") },
+                selected = currentRoute == Routes.homeTab,
+                onClick = {
+                    navController.navigate(Routes.homeTab) {
+                        popUpTo(Routes.homeTab) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+
+            NavigationBarItem(
+                icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Spill") },
+                label = { Text("Spill") },
+                selected = currentRoute == Routes.gamesTab,
+                onClick = {
+                    navController.navigate(Routes.gamesTab) {
+                        popUpTo(Routes.homeTab) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun HomeTab(navController: NavController) {
+    HomeScreen(navController)
+}
+
+@Composable
+fun GamesTab(navController: NavController) {
+    GameListScreen(navController)
 }

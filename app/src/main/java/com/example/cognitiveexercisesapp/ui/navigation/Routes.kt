@@ -16,4 +16,8 @@ object Routes {
     var game2Screen = "game2_screen"
     var game3ScreenInstructions = "game3_screen_Instructions"
     var game3Screen = "game3_screen"
+
+    // New routes for tab navigation
+    const val homeTab = "home_tab"
+    const val gamesTab = "games_tab"
 }
