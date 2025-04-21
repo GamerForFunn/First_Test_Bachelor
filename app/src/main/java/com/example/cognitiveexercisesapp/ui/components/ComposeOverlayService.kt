@@ -162,7 +162,7 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                                    text = "Klar for litt hjernetrim? En liten mental utfordring gjør godt mellom søkene!",
                                     fontSize = 24.sp,
                                     lineHeight = 36.sp,
                                     color = Color(0xFF6B6B6B),
@@ -278,7 +278,8 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
             Box(
                 modifier = Modifier
                     .height(400.dp)
-                    .width(320.dp),
+                    .width(320.dp)
+                    .border(2.dp, Color.Black),
                 contentAlignment = Alignment.Center
             ) {
                 Box(
@@ -301,7 +302,7 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Utfør noen oppgaver for å fortsette å bruke telefonen din.",
+                                text = "Klar for litt hjernetrim? En liten mental utfordring gjør godt mellom søkene!",
                                 fontSize = 24.sp,
                                 lineHeight = 36.sp,
                                 color = Color(0xFF6B6B6B),
