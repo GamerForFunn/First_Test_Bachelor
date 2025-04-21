@@ -35,6 +35,11 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <!-- Service for monitoring app usage -->
+        <service
+            android:name=".services.UsageMonitoringService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
