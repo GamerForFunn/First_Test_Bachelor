@@ -33,6 +33,8 @@ import androidx.compose.material3.NavigationBarItem
 
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.example.cognitiveexercisesapp.services.UsageMonitoringService
@@ -49,6 +51,7 @@ import com.example.cognitiveexercisesapp.ui.navigation.HomeScreen
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game1ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game2ScreenInstructions
 import com.example.cognitiveexercisesapp.ui.navigation.Instructions.Game3ScreenInstructions
+import com.example.cognitiveexercisesapp.ui.navigation.NavigationSingleton
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.notification.NotificationScheduler
 import com.example.cognitiveexercisesapp.ui.notification.Notifier
@@ -103,6 +106,27 @@ class MainActivity : ComponentActivity() {
                 MainScreenWithBottomNav()
             }
         }
+
+        if (intent.hasExtra("DESTINATION")) {
+            when (intent.getStringExtra("DESTINATION")) {
+                "game1" -> {
+                    // Navigate to Game 1 with a small delay to ensure UI is ready
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        NavigationSingleton.navigateTo(Routes.game1ScreenInstructions)
+                    }, 300)
+                }
+                "game2" -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        NavigationSingleton.navigateTo(Routes.game2ScreenInstructions)
+                    }, 300)
+                }
+                "game3" -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        NavigationSingleton.navigateTo(Routes.game3ScreenInstructions)
+                    }, 300)
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -153,6 +177,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreenWithBottomNav() {
     val navController = rememberNavController()
+
+    // Save the navigation controller to the singleton
+    DisposableEffect(navController) {
+        NavigationSingleton.navController = navController
+        onDispose {
+            if (NavigationSingleton.navController == navController) {
+                NavigationSingleton.navController = null
+            }
+        }
+    }
 
     Scaffold(
         bottomBar = {

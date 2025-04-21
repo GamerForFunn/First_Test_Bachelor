@@ -191,7 +191,12 @@ class ComposeOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner
                                 }
                                 Button(
                                     onClick = {
-                                        val intent = Intent(this@ComposeOverlayService, MainActivity::class.java)
+                                        // Choose a random game
+                                        val gameNumber = (1..3).random()
+                                        val intent = Intent(this@ComposeOverlayService, MainActivity::class.java).apply {
+                                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            putExtra("DESTINATION", "game$gameNumber")
+                                        }
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                         startActivity(intent)
                                         hideOverlay()

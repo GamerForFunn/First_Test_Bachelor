@@ -8,8 +8,6 @@ object Routes {
     val exitExercise = "exit_exercise"
     val wrongAnswer = "wrong_answer"
 
-
-
     var game1ScreenInstructions = "game1_screen_instructions"
     var game1Screen = "game1_screen"
     var game2ScreenInstructions = "game2_screen_Instructions"
