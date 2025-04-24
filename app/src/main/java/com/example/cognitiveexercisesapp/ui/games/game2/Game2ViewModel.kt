@@ -13,6 +13,13 @@ import com.example.cognitiveexercisesapp.ui.data.game3model.Game3Difficulty
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Config
 import kotlinx.coroutines.flow.update
 
+data class GamaState(
+    val score: Int,
+    val currentLevel: Int,
+    val isGameOver: Boolean
+)
+
+
 class Game2ViewModel : ViewModel() {
     private val _randomImage1 = MutableStateFlow(0)
     val randomImage1: StateFlow<Int> = _randomImage1.asStateFlow()
@@ -39,6 +46,8 @@ class Game2ViewModel : ViewModel() {
     val backgroundColor: StateFlow<ComposeColor> = _backgroundColor.asStateFlow()
 
     private var elapsedTime = 0L
+    private val _gameState = MutableStateFlow(GamaState(0, 1, false))
+    val gameState: StateFlow<GamaState> = _gameState.asStateFlow()
 
     init {
         generateRandomImages()

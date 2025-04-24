@@ -3,11 +3,16 @@ agp = "8.8.2"
 androidxLifecycleRuntimeKtx = "2.6.1"
 androidxLifecycleRuntimeKtxVersion = "2.6.2"
 appcompat = "1.7.0"
+core = "1.6.1"
+coreTesting = "2.2.0"
+junitJupiterApi = "5.8.1"
+junitJupiterEngine = "5.8.1"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinxCoroutinesTest = "1.8.0"
 lifecycleRuntimeCompose = "2.6.1"
 lifecycleRuntimeComposeVersion = "2.8.7"
 lifecycleRuntimeKtx = "2.8.7"
@@ -15,15 +20,21 @@ activityCompose = "1.10.0"
 composeBom = "2024.04.01"
 lifecycleRuntimeKtxVersion = "2.5.1"
 lifecycleViewmodel = "2.5.1"
+mockitoCore = "5.14.2"
+mockitoKotlin = "3.12.4"
+mockk = "3.12.4"
 navigationCompose = "2.8.7"
 runtimeLivedata = "1.7.8"
+uiTestJunit4 = "1.7.8"
 workRuntimeKtx = "2.10.0"
 gamesActivity = "4.0.0"
 storage = "1.5.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleRuntimeCompose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-lifecycle-runtime-compose-v287 = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeComposeVersion" }
@@ -51,6 +62,13 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-games-activity = { group = "androidx.games", name = "games-activity", version.ref = "gamesActivity" }
 androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiterApi" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

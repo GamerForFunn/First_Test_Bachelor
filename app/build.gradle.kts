@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.testImplementation
 
 plugins {
     alias(libs.plugins.android.application)
@@ -77,4 +78,16 @@ dependencies {
     implementation (libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx.v262)
 
+
+    //Unit testing Dependencies
+    // Required -- JUnit 4 framework
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.androidx.core.testing) // For InstantTaskExecutorRule
+    testImplementation(libs.kotlinx.coroutines.test) // For coroutines testing
+    testImplementation(libs.mockito.kotlin) //Mockito
+    testImplementation(libs.mockito.core)
+    testImplementation (libs.mockk) //Mockk
+    testImplementation(libs.ui.test.junit4)
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.8")
 }
