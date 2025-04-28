@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
@@ -45,6 +46,7 @@ import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
 // Function that shows the screen.
 @Composable
 fun ComparisonChartScreen(navController: NavController) {
+    var lang = LanguageManager.language.comparisonChartScreen
     var showContent by remember { mutableStateOf(true) }
     showScoreExerciseScreen = false // MUST BE HERE OR BUG WILL OCCUR.
     countWrongAnswers = 0 // Reset the wrong answers counter.
@@ -54,8 +56,12 @@ fun ComparisonChartScreen(navController: NavController) {
             BackgroundThemeComparisonChart(
                 modifier = Modifier.padding(innerPadding)
             )
-            ScreenTitle()
+            ScreenTitle(titleText = lang.title)
             ScoreDisplay(
+                infoText = lang.info,
+                infoTextPoint = lang.infoPoint,
+                average = lang.average,
+                YourPoints = lang.points,
                 // The user score here should be calculated from the exercise. This value is just ph.
                 calculateUserScore(
                     GameInstructions.difficulty.toInt(),
@@ -66,6 +72,7 @@ fun ComparisonChartScreen(navController: NavController) {
                 modifier = Modifier.padding(innerPadding)
             )
             ContinueButton(
+                buttonText = lang.continueButton,
                 onClick = {
                     navController.navigate(Routes.gamesTab)
                           },
@@ -89,7 +96,7 @@ private fun BackgroundThemeComparisonChart(modifier: Modifier = Modifier) {
 
 // Function that is responsible for the screen title.
 @Composable
-fun ScreenTitle() {
+fun ScreenTitle(titleText: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -101,7 +108,7 @@ fun ScreenTitle() {
             .background(Color(0xFF40376E), shape = RoundedCornerShape(10.dp))
     ) {
         Text(
-            text = "Poengdiagram",
+            text = titleText,
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             modifier = Modifier
@@ -114,7 +121,15 @@ fun ScreenTitle() {
 
 // Function that is responsible for the "Your score" part. Takes in the user score as argument.
 @Composable
-fun ScoreDisplay(userScore: Int, averageScore: Int, modifier: Modifier = Modifier) {
+fun ScoreDisplay(
+    infoText: String,
+    infoTextPoint: String,
+    average: String,
+    YourPoints: String,
+    userScore: Int,
+    averageScore: Int,
+    modifier: Modifier = Modifier
+) {
         Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -126,7 +141,7 @@ fun ScoreDisplay(userScore: Int, averageScore: Int, modifier: Modifier = Modifie
                 .padding(bottom = 380.dp)
         ) {
             Text(
-                text = "Dine poeng",
+                text = YourPoints,
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -171,7 +186,7 @@ Box(
             modifier = modifier
         ) {
             Text(
-                text = "Snittpoeng",
+                text = average,
                 textAlign = TextAlign.Center,
                 style = whiteTextStyle.copy(fontSize = 32.sp),
                 modifier = Modifier
@@ -224,8 +239,7 @@ Box(
                             .height(40.dp)
                     )
                     Text(
-                        text = "Andre spillere fikk i gjennomsnitt " +
-                                "$averageScore poeng",
+                        text =  infoText + averageScore + infoTextPoint,
                         style = whiteTextStyle.copy(fontSize = 18.sp),
                         modifier = Modifier
                             .padding(top = 160.dp)
@@ -237,7 +251,11 @@ Box(
 }
 
 @Composable
-fun ContinueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun ContinueButton(
+    buttonText: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .padding(48.dp)
@@ -252,7 +270,7 @@ fun ContinueButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
         ) {
             Text(
-                "Fortsett",
+                buttonText,
                 fontSize = 24.sp,
                 modifier = Modifier,
                 color = Color.White

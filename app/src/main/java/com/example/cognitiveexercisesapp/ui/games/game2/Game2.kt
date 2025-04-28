@@ -89,11 +89,7 @@ fun Game2Screen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(32.dp))
             Text( //We had language selection for test one but for our testers Norwegian was more important
-                text = when (GameInstructions.currentLanguage){ //Switches languages
-                    "EN" -> "Please select the correct image!"
-                    "NO" -> "Vennligst velg det riktige bildet"
-                    else -> "Vennligst velg det riktige bildet"
-                },
+                text = "Please select the correct image!",
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,

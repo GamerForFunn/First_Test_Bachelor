@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.theme.whiteTextStyle
@@ -39,6 +40,8 @@ import kotlinx.coroutines.delay
 // This actually displays the score, time, wrong answers etc.
 @Composable
 fun ExerciseFinished(navController: NavController) {
+
+    var lang = LanguageManager.language.exerciseFinishedScreen
 
     // Vars for showing the different parts of the screen after a given delay.
     var showTimeCounter by remember { mutableStateOf(false) }
@@ -85,15 +88,17 @@ fun ExerciseFinished(navController: NavController) {
                 modifier = Modifier.padding(innerPadding)
             )
             FinishedExercise(
+                titleText = lang.title,
                 modifier = Modifier.padding(innerPadding)
             )
             if (showTimeCounter) {
-                ShowTimeCounter(true, timeSpentSeconds, modifier = Modifier.padding(innerPadding))
+                ShowTimeCounter(time = lang.time, seconds = lang.seconds, true, timeSpentSeconds, modifier = Modifier.padding(innerPadding))
             }
             // countWrongAnswers is temp until the system is up n running. Should take the
             // amount of wrong answers from the exercise.
             if (showWrongAnswers) {
                 ShowWrongAnswers(
+                    lang.wrong,
                     countWrongAnswers,
                     true,
                     modifier = Modifier.padding(innerPadding)
@@ -103,13 +108,14 @@ fun ExerciseFinished(navController: NavController) {
             // Should take the difficulty from the exercise as well as a given difficulty bonus.
             if (showLevelDifficulty) {
                 ShowLevelDifficulty(
+                    lang.difficulty,
                     GameInstructions.difficulty.toInt(),
                     true,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
             if (showTotalScore) {
-                ShowTotalScore(true, modifier = Modifier.padding(innerPadding))
+                ShowTotalScore(scoreText = lang.score, true, modifier = Modifier.padding(innerPadding))
             }
 
             // This is just a ph for calculating the user score.
@@ -123,6 +129,7 @@ fun ExerciseFinished(navController: NavController) {
             }
             if (showButton) {
                 ContinueButton(
+                    buttonText = lang.continueButton,
                     onClick = {
                         navController.navigate(Routes.comparisonChart)
                     },
@@ -153,13 +160,13 @@ fun BackgroundThemeExerciseFinished(modifier: Modifier = Modifier) {
 
 // This displays the exercise finished text.
 @Composable
-fun FinishedExercise(modifier: Modifier = Modifier) {
+fun FinishedExercise(titleText: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
-            text = "Spill fullført",
+            text = titleText,
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             fontSize = 30.sp,
@@ -175,14 +182,14 @@ var timeSpentSeconds = 0
 
 // Shows the counter (time used) in the app.
 @Composable
-fun ShowTimeCounter(imageVisibility: Boolean, timeSpent: Int, modifier: Modifier = Modifier) {
+fun ShowTimeCounter(time: String, seconds: String, imageVisibility: Boolean, timeSpent: Int, modifier: Modifier = Modifier) {
     val imageIsVisible by remember { mutableStateOf(imageVisibility) }
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Tid: $timeSpent sekunder",
+            text = "$time $timeSpent $seconds",
             textAlign = TextAlign.Center,
             style = whiteTextStyle.copy(fontSize = 32.sp),
             color = Color(0xFF007AFF),
@@ -231,6 +238,7 @@ var countWrongAnswers = 0
 // Displays the amount of wrong answers the user got.
 @Composable
 fun ShowWrongAnswers(
+    wrongText: String,
     wrongAnswers: Int,
     imageVisibility: Boolean,
     modifier: Modifier = Modifier
@@ -241,7 +249,7 @@ fun ShowWrongAnswers(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Feil svar: $wrongAnswers",
+            text = "$wrongText $wrongAnswers",
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -275,6 +283,7 @@ fun ShowWrongAnswers(
 // Displays the difficulty level of the level. Gives points based on difficulty.
 @Composable
 fun ShowLevelDifficulty(
+    difficultyText: String,
     difficultyBonusPoints: Int,
     imageVisibility: Boolean,
     modifier: Modifier = Modifier
@@ -286,7 +295,7 @@ fun ShowLevelDifficulty(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Vanskelighetsgrad: $difficultyBonusPoints",
+            text = "$difficultyText $difficultyBonusPoints",
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -320,14 +329,14 @@ fun ShowLevelDifficulty(
 
 // This shows the total score that the player managed to achieve.
 @Composable
-fun ShowTotalScore(imageVisibility: Boolean, modifier: Modifier = Modifier) {
+fun ShowTotalScore(scoreText: String, imageVisibility: Boolean, modifier: Modifier = Modifier) {
     val imageIsVisible by remember { mutableStateOf(imageVisibility) }
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Dine poeng",
+            text = scoreText,
             textAlign = TextAlign.Center,
             color = Color(0xFF007AFF),
             style = whiteTextStyle.copy(fontSize = 32.sp),
@@ -391,7 +400,12 @@ fun calculateUserScore(difficulty: Int, timeSpent: Int, wrongAnswers: Int, modif
 
 // Continue button that takes you to the next screen.
 @Composable
-fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier = Modifier) {
+fun ContinueButton(
+    buttonText: String,
+    onClick: () -> Unit,
+    showButton: Boolean,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .padding(48.dp)
@@ -407,7 +421,7 @@ fun ContinueButton(onClick: () -> Unit, showButton: Boolean, modifier: Modifier 
                 colors = ButtonColors(Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF),Color(0xFF007AFF))
             ) {
                 Text(
-                    "Fortsett",
+                    buttonText,
                     fontSize = 24.sp,
                     modifier = Modifier,
                     color = Color.White

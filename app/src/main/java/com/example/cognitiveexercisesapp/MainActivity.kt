@@ -43,6 +43,7 @@ import com.example.cognitiveexercisesapp.ui.components.ComparisonChartScreen
 import com.example.cognitiveexercisesapp.ui.components.DoctorsCommentShowScreen
 import com.example.cognitiveexercisesapp.ui.components.ExerciseFinished
 import com.example.cognitiveexercisesapp.ui.components.WrongAnswerScreen
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.games.game1.Game1Screen
 import com.example.cognitiveexercisesapp.ui.games.game2.Game2Screen
 import com.example.cognitiveexercisesapp.ui.games.game3.Game3Screen
@@ -243,48 +244,47 @@ fun MainScreenWithBottomNav() {
     }
 }
 
-@Composable
-fun BottomNavBar(navController: NavController) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    @Composable
+    fun BottomNavBar(navController: NavController) {
+        val currentLanguage = LanguageManager.currentLanguage
+        val lang = LanguageManager.language.mainActivity
 
-    // Only show the bottom nav when we're on one of the main tabs
-    val showBottomNav = currentRoute == Routes.homeTab || currentRoute == Routes.gamesTab
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
 
-    if (showBottomNav) {
-        NavigationBar {
-            NavigationBarItem(
-                icon = { Icon(Icons.Default.Home, contentDescription = "Hjem") },
-                label = { Text("Hjem") },
-                selected = currentRoute == Routes.homeTab,
-                onClick = {
-                    navController.navigate(Routes.homeTab) {
-                        popUpTo(Routes.homeTab) {
-                            saveState = true
+        val showBottomNav = currentRoute == Routes.homeTab || currentRoute == Routes.gamesTab
+
+        // This show the bottom nav when we're on one of the main tabs
+        if (showBottomNav) {
+            NavigationBar {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text(lang.home) },
+                    selected = currentRoute == Routes.homeTab,
+                    onClick = {
+                        navController.navigate(Routes.homeTab) {
+                            popUpTo(Routes.homeTab) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
 
-            NavigationBarItem(
-                icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Spill") },
-                label = { Text("Spill") },
-                selected = currentRoute == Routes.gamesTab,
-                onClick = {
-                    navController.navigate(Routes.gamesTab) {
-                        popUpTo(Routes.homeTab) {
-                            saveState = true
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Game") },
+                    label = { Text(lang.game) },
+                    selected = currentRoute == Routes.gamesTab,
+                    onClick = {
+                        navController.navigate(Routes.gamesTab) {
+                            popUpTo(Routes.homeTab) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
         }
     }
-}
 
 @Composable
 fun HomeTab(navController: NavController) {

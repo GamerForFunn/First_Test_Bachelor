@@ -15,36 +15,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 
 @Composable
-fun GameListScreen(navController: NavController){
+fun GameListScreen(navController: NavController) {
+    val lang = LanguageManager.language.gameListScreen
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
         Text(
-            text = "Tilgjengelige spill",
+            text = lang.availableGames,
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         // List of available games with clickable cards
         GameCard(
-            title = "Spill 1",
-            description = "Stigende Rekkefølge",
+            title = lang.game1Title,
+            description = lang.game1Description,
             onClick = { navController.navigate(Routes.game1ScreenInstructions) }
         )
 
         GameCard(
-            title = "Spill 2",
-            description = "Finn riktig bilde",
+            title = lang.game2Title,
+            description = lang.game2Description,
             onClick = { navController.navigate(Routes.game2ScreenInstructions) }
         )
 
         GameCard(
-            title = "Spill 3",
-            description = "Par sokkene",
+            title = lang.game3Title,
+            description = lang.game3Description,
             onClick = { navController.navigate(Routes.game3ScreenInstructions) }
         )
     }
@@ -76,4 +79,3 @@ fun GameCard(title: String, description: String, onClick: () -> Unit) {
         }
     }
 }
-

@@ -12,11 +12,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 
 @Composable
 fun Game2ScreenInstructions(navController: NavController) {
+    val commonLang = LanguageManager.language.commonGameTexts
+    val game2Instructions = LanguageManager.language.game2Instructions
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -24,14 +27,14 @@ fun Game2ScreenInstructions(navController: NavController) {
             .then(AppTheme.screenPadding)
     ) {
         Text(
-            text = "Finn bilde!🖼️",
+            text = game2Instructions.instructionsTitle,
             fontSize = AppTheme.h1,
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Text(text = GameInstructions.getGame2Instructions(), fontSize = 26.sp)
+        Text(text = game2Instructions.instructions, fontSize = 26.sp)
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -41,35 +44,17 @@ fun Game2ScreenInstructions(navController: NavController) {
             OutlinedButton(
                 onClick = { navController.navigate(Routes.gamesTab) }
             ) {
-                Text(text = "Avbryt", fontSize = 30.sp)
+                Text(text = commonLang.cancel, fontSize = 30.sp)
             }
 
             Spacer(modifier = Modifier.width(10.dp))
 
             Button(
                 onClick = { navController.navigate(Routes.game2Screen) },
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Start", fontSize = 30.sp)
+                Text(text = commonLang.start, fontSize = 30.sp)
             }
         }
     }
-
-    // old game 2 intro
-    /*Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .then(AppTheme.screenPadding)
-    ) {
-        Text(text = GameInstructions.getGame2Instructions(), fontSize = AppTheme.h1)
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(onClick = { navController.navigate(Routes.game2Screen) }) {
-            Text(text = "Start", fontSize = AppTheme.buttonTextSize)
-        }
-    }*/
 }

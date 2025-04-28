@@ -12,11 +12,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 
 @Composable
 fun Game3ScreenInstructions(navController: NavController) {
+    val commonLang = LanguageManager.language.commonGameTexts
+    val game3Instructions = LanguageManager.language.game3Instructions
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -24,14 +27,14 @@ fun Game3ScreenInstructions(navController: NavController) {
             .then(AppTheme.screenPadding)
     ) {
         Text(
-            text = "Par sokkene! 🧦",
+            text = game3Instructions.instructionsTitle,
             fontSize = AppTheme.h1,
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Text(text = GameInstructions.getGame3Instructions(), fontSize = 26.sp)
+        Text(text = game3Instructions.instructions, fontSize = 26.sp)
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -41,17 +44,16 @@ fun Game3ScreenInstructions(navController: NavController) {
             OutlinedButton(
                 onClick = { navController.navigate(Routes.gamesTab) }
             ) {
-                Text(text = "Avbryt", fontSize = 30.sp)
+                Text(text = commonLang.cancel, fontSize = 30.sp)
             }
 
             Spacer(modifier = Modifier.width(10.dp))
 
             Button(
                 onClick = { navController.navigate(Routes.game3Screen) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                ) {
-                Text(text = "Start", fontSize = 30.sp)
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = commonLang.start, fontSize = 30.sp)
             }
         }
     }

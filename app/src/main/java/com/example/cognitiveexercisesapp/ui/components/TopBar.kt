@@ -26,10 +26,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 
 @Composable
 fun TopBar(helpRoute: String, navController: NavController, timerText: String){
+    val lang = LanguageManager.language.commonGameTexts
     Box(
         modifier = Modifier
             .padding(16.dp)
@@ -70,7 +72,7 @@ fun TopBar(helpRoute: String, navController: NavController, timerText: String){
                 modifier = Modifier.height(48.dp)
             ) {
                 Text(
-                    text = "Hjelp",
+                    text = lang.help,
                     fontSize = 20.sp,
                     color = Color.Black
                 )

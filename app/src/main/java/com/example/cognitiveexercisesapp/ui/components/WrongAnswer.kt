@@ -36,11 +36,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cognitiveexercisesapp.R
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 
 @Composable
 fun WrongAnswerScreen(navController: NavController, currentGame: String) {
+    var lang = LanguageManager.language.wrongAnswerScreen
     var showContent by remember { mutableStateOf(true) }
     if (!showContent) {
         navController.navigate(Routes.exerciseFinished)
@@ -59,13 +61,13 @@ fun WrongAnswerScreen(navController: NavController, currentGame: String) {
             Spacer(modifier = Modifier.weight(0.25f))
 
             // Oops! image and text section.
-            EmbarrassedImage()
+            EmbarrassedImage(text = lang.title)
 
             // Spacer between top and middle sections.
             Spacer(modifier = Modifier.weight(0.05f))
 
             // Middle section: the confirmation box.
-            AreYouSure()
+            AreYouSure(text = lang.text)
 
             // Spacer between middle and bottom sections.
             Spacer(modifier = Modifier.weight(0.15f))
@@ -76,8 +78,8 @@ fun WrongAnswerScreen(navController: NavController, currentGame: String) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ExitButton(onClick = { Process.killProcess(Process.myPid()) })
-                RetryButton(onClick = {
+                ExitButton(text = lang.exit, onClick = { Process.killProcess(Process.myPid()) })
+                RetryButton(text = lang.tryAgain, onClick = {
                     when (currentGame) {
                         "Game1" -> navController.navigate(Routes.game1Screen)
                         "Game2" -> navController.navigate(Routes.game2Screen)
@@ -86,7 +88,7 @@ fun WrongAnswerScreen(navController: NavController, currentGame: String) {
                 })
             }
             // Note text below the buttons.
-            NoteText(modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 8.dp))
+            NoteText(text = lang.note, modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 8.dp))
 
             // Bottom spacer to keep the bottom section from sitting too low.
             Spacer(modifier = Modifier.weight(0.2f))
@@ -114,7 +116,7 @@ fun BackgroundTheme(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ExitButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun ExitButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     // A simple button without a full-size Box.
     Button(
         onClick = onClick,
@@ -124,7 +126,7 @@ fun ExitButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             .height(50.dp)
     ) {
         Text(
-            text = "Avbryt",
+            text = text,
             fontSize = 30.sp,
             color = Color(0xFF007AFF)
         )
@@ -132,7 +134,7 @@ fun ExitButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RetryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun RetryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF007AFF)),
@@ -141,7 +143,7 @@ fun RetryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
             .height(50.dp)
     ) {
         Text(
-            text = "Prøv igjen",
+            text = text,
             fontSize = 30.sp,
             color = Color.White
         )
@@ -149,9 +151,9 @@ fun RetryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NoteText(modifier: Modifier = Modifier) {
+fun NoteText(text: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Notat: Hvis du avslutter spillet før det er ferdig, får du ingen poeng.",
+        text = text,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         color = Color(0xFF6B6B6B),
@@ -161,7 +163,7 @@ fun NoteText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AreYouSure(modifier: Modifier = Modifier) {
+fun AreYouSure(text: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .width(360.dp)
@@ -171,7 +173,7 @@ fun AreYouSure(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Du kan prøve dette spillet igjen, eller avslutte.\nHva vil du gjøre?",
+            text = text,
             fontSize = 24.sp,
             lineHeight = 36.sp,
             color = Color(0xFF6B6B6B)
@@ -180,7 +182,7 @@ fun AreYouSure(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EmbarrassedImage(modifier: Modifier = Modifier) {
+fun EmbarrassedImage(text: String, modifier: Modifier = Modifier) {
     // Combine image and text into one column.
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -193,7 +195,7 @@ fun EmbarrassedImage(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Oops!\nDu valgte feil svar.",
+            text = text,
             fontSize = 32.sp,
             lineHeight = 40.sp,
             color = Color.Black,

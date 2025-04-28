@@ -37,6 +37,7 @@ import com.example.cognitiveexercisesapp.ui.data.GameInstructions
 import com.example.cognitiveexercisesapp.ui.theme.AppTheme
 import com.example.cognitiveexercisesapp.ui.theme.CognitiveExercisesAppTheme
 import com.example.cognitiveexercisesapp.ui.components.PopupDialog
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.utils.PermissionUtils
 
 // Checks if the "Activate pop-up" button has been pressed.
@@ -44,7 +45,16 @@ var popUpActive = false
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    var currentLanguage by remember { mutableStateOf(GameInstructions.currentLanguage) }
+    var currentLanguage by remember { mutableStateOf(LanguageManager.currentLanguage) }
+
+    // Update LanguageManager + local state at the same time
+    fun changeLanguage(newLang: String) {
+        LanguageManager.currentLanguage = newLang
+        currentLanguage = newLang
+    }
+
+    val lang = LanguageManager.language.homeScreen
+
 
     var difficulty by remember { mutableStateOf(GameInstructions.difficulty) }
     var showPopup by remember { mutableStateOf(false) }
@@ -86,12 +96,13 @@ fun HomeScreen(navController: NavController) {
             .fillMaxSize()
             .padding(top = 64.dp)
     ) {
-        Text(text = "Hjernetrim", fontSize = AppTheme.h1)
+        Text(text = lang.appTitle, fontSize = AppTheme.h1)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Difficulty Slider
-        Text(text = "Velg vanskelighetsgrad: ${difficulty.toInt()}", fontSize = AppTheme.h2)
+        Text(text = "${lang.selectDifficulty} ${difficulty.toInt()}", fontSize = AppTheme.h2)
+
         Slider(
             value = difficulty,
             onValueChange = { newValue ->
@@ -107,8 +118,8 @@ fun HomeScreen(navController: NavController) {
 
 
         // **Language Selection**
-        if (false) {
-            Text(text = "Select Language:", fontSize = AppTheme.h2)
+        if (true) {
+            Text(text = lang.selectLanguage, fontSize = AppTheme.h2)
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -116,11 +127,9 @@ fun HomeScreen(navController: NavController) {
             ) {
                 RadioButton(
                     selected = currentLanguage == "EN",
-                    onClick = {
-                        GameInstructions.currentLanguage = "EN"
-                        currentLanguage = "EN"
-                    }
+                    onClick = { changeLanguage("EN") }
                 )
+
                 Text(text = "English", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
             }
 
@@ -130,14 +139,11 @@ fun HomeScreen(navController: NavController) {
             ) {
                 RadioButton(
                     selected = currentLanguage == "NO",
-                    onClick = {
-                        GameInstructions.currentLanguage = "NO"
-                        currentLanguage = "NO"
-                    }
+                    onClick = { changeLanguage("NO") }
                 )
                 Text(text = "Norsk", fontSize = AppTheme.buttonTextSize, modifier = Modifier.padding(start = 8.dp))
-                Spacer(modifier = Modifier.height(16.dp))
             }
+
         }
 
         // Activate pop-up button (commented out for now)
@@ -170,19 +176,19 @@ fun HomeScreen(navController: NavController) {
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = "Tillatelser",
+                    text = lang.permissionsTitle,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 Text(
-                    text = "For å kunne bruke appen må begge tillatelser være aktivert.",
+                    text = lang.permissionsExplanation,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
                 // Permission Status Indicators
                 PermissionStatusItem(
-                    title = "Vis over andre apper",
+                    title = lang.overlayPermission,
                     isGranted = overlayPermissionGranted,
                     onRequest = {
                         PermissionUtils.navigateToOverlaySettings(context)
@@ -192,7 +198,7 @@ fun HomeScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 PermissionStatusItem(
-                    title = "Brukstilgang",
+                    title = lang.usagePermission,
                     isGranted = usageStatsPermissionGranted,
                     onRequest = {
                         PermissionUtils.navigateToUsageSettings(context)
@@ -204,7 +210,7 @@ fun HomeScreen(navController: NavController) {
         // Service Status
         if (overlayPermissionGranted && usageStatsPermissionGranted) {
             Text(
-                text = "Appen er klar til bruk!",
+                text = lang.appReady,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 16.dp)
