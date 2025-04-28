@@ -41,12 +41,15 @@ import com.example.cognitiveexercisesapp.ui.components.CountTime
 import com.example.cognitiveexercisesapp.ui.components.TopBar
 import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
 import com.example.cognitiveexercisesapp.ui.data.GameInstructions
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import com.example.testforbachelor.ui.game_2.Game2ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Game2Screen(navController: NavController) {
+    val lang = LanguageManager.language.game2Instructions
+
     val viewModel : Game2ViewModel = viewModel()
     val randomImage1 by viewModel.randomImage1.collectAsState()
     val randomImage2 by viewModel.randomImage2.collectAsState()
@@ -89,7 +92,7 @@ fun Game2Screen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(32.dp))
             Text( //We had language selection for test one but for our testers Norwegian was more important
-                text = "Please select the correct image!",
+                text = lang.runningGameHint,
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,

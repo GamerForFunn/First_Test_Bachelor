@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 
 @Composable
 fun PermissionStatusItem(
@@ -23,6 +24,8 @@ fun PermissionStatusItem(
     isGranted: Boolean,
     onRequest: () -> Unit
 ) {
+    var lang = LanguageManager.language.permissionStatus
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,7 +39,7 @@ fun PermissionStatusItem(
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = if (isGranted) "Aktivert" else "Ikke aktivert",
+                text = if (isGranted) lang.buttonTextOn else lang.buttonTextOff,
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (isGranted)
                     MaterialTheme.colorScheme.primary

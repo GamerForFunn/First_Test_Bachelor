@@ -25,12 +25,15 @@ import com.example.cognitiveexercisesapp.ui.components.CountTime
 import com.example.cognitiveexercisesapp.ui.components.TopBar
 import com.example.cognitiveexercisesapp.ui.components.WordPairingWordButton
 import com.example.cognitiveexercisesapp.ui.components.countWrongAnswers
+import com.example.cognitiveexercisesapp.ui.data.languages.LanguageManager
 import com.example.cognitiveexercisesapp.ui.navigation.Routes
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Game3Screen (navController: NavController) {
+    val lang = LanguageManager.language.game3Instructions
+
     val viewModel: WordPairingViewModel = viewModel()
     val gameState by viewModel.gameState.observeAsState()
     val timerText = "⏰ ${gameState!!.timeLeft}s"
@@ -56,7 +59,7 @@ fun Game3Screen (navController: NavController) {
             TopBar(Routes.game3ScreenInstructions, navController, timerText)
 
             Text(
-                text = "Par sokkene!",
+                text = lang.runningGameHint,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(top = 8.dp)
             )

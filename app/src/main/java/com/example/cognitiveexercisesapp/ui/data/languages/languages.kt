@@ -23,6 +23,7 @@ interface LanguageTexts {
     val wrongAnswerScreen: WrongAnswerScreenTexts
     val exerciseFinishedScreen: ExerciseFinishedScreenTexts
     val comparisonChartScreen: ComparisonChartScreenTexts
+    val permissionStatus: PermissionStatusTexts
 }
 // ____________________________________________________________________________________ English __________________________________________________________________________________
 object English : LanguageTexts {
@@ -67,13 +68,13 @@ object English : LanguageTexts {
     override val game2Instructions = Game2InstructionsTexts(
         instructionsTitle = "Find the Picture!",
         instructions = "Press the option that is identical to the large picture",
-        runningGameHint = "___hint___E"
+        runningGameHint = "Please select the correct image!"
     )
 
     override val game3Instructions = Game3InstructionsTexts(
         instructionsTitle = "Match the Words!",
         instructions = "Press the two socks that contain words of the same meaning to find the correct pair",
-        runningGameHint = "___hint___E"
+        runningGameHint = "Match the socks!"
     )
 
     override val wrongAnswerScreen = WrongAnswerScreenTexts(
@@ -101,6 +102,11 @@ object English : LanguageTexts {
         info = "Other players scored an average of ",
         continueButton = "Continue",
         infoPoint = " points",
+    )
+
+    override val permissionStatus = PermissionStatusTexts(
+        buttonTextOn = "Enabled",
+        buttonTextOff = "Not enabled"
     )
 }
 // ____________________________________________________________________________________ Norwegian ____________________________________________________________________________________
@@ -145,13 +151,13 @@ object Norwegian : LanguageTexts {
     override val game2Instructions = Game2InstructionsTexts(
         instructionsTitle = "Finn bildet!",
         instructions = "Trykk på det alternativet som er det samme som et store bildet",
-        runningGameHint = "___hint___N"
+        runningGameHint = "Vennligst velg riktig bilde!"
     )
 
     override val game3Instructions = Game3InstructionsTexts(
         instructionsTitle = "Par ordene!",
         instructions = "Trykk på de to sokkene som inneholder ord av lik betydning for å finne det riktige paret",
-        runningGameHint = "___hint___N"
+        runningGameHint = "Par sokkene!"
     )
 
     override val wrongAnswerScreen = WrongAnswerScreenTexts(
@@ -179,6 +185,11 @@ object Norwegian : LanguageTexts {
         info = "Andre spillere fikk i gjennomsnitt ",
         continueButton = "Fortsett",
         infoPoint = " poeng",
+    )
+
+    override val permissionStatus = PermissionStatusTexts(
+        buttonTextOn = "Aktivert",
+        buttonTextOff = "Ikke aktivert"
     )
 
 
@@ -255,4 +266,9 @@ data class ComparisonChartScreenTexts(
     val info: String,
     val continueButton: String,
     val infoPoint: String,
+)
+
+data class PermissionStatusTexts(
+    val buttonTextOn: String,
+    val buttonTextOff: String,
 )
