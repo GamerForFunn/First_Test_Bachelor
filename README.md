@@ -1,6 +1,6 @@
 # Cognify
 
-**Cognify** is a mobile application designed to promote cognitive training for elderly users through short, minigames. Developed as part of a combined Bachelor and Master thesis project, Cognify explores how smartphones can be used throughout the day to encourage mental activity and reduce passive phone use. For more details about the app and the three iterations it went through, [click here](https://your-link-here.com).
+**Cognify** is a mobile application designed to promote cognitive training for elderly users through short, minigames. Developed as part of a combined Bachelor and Master thesis project, Cognify explores how smartphones can be used throughout the day to encourage mental activity and reduce passive phone use. For more details about the app and the three iterations it went through, [click here](https://sspect.github.io/Cognify/index.html).
 
 ---
 
